@@ -36,7 +36,7 @@ public class SaleDetailBO {
         double discount = 0.0;
         
         switch(customerType){
-            case "AFILIATED":
+            case "AFFILIATED":
                 discount = subtotal * StringHelpers.AFFILIATED_DSCT;
                 break;
             case "FREQUENT":
@@ -56,8 +56,10 @@ public class SaleDetailBO {
         if (oldSaleDetail != null) {
             int newQuantity = newSaleDetail.getQuantity();
             double newSubtotal = newSaleDetail.getSubtotal();
+            double newDiscount = newSaleDetail.getDiscount();
             oldSaleDetail.setQuantity(oldSaleDetail.getQuantity() + newQuantity);
             oldSaleDetail.setSubtotal(oldSaleDetail.getSubtotal() + newSubtotal);
+            oldSaleDetail.setDiscount(oldSaleDetail.getDiscount() + newDiscount);
             saleDetailDao.update(oldSaleDetail);
             return true;
         }

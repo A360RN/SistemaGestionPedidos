@@ -4,20 +4,45 @@ $(document).ready(() => {
     });
 
     $('select').material_select();
+    
+    init();
+    
+    function init(){
+        validateNumberInput();
+        btnCartEvent();
+    }
 
     // si val en cantidad <= 0
-    $('input[type="number"]').bind('keyup mouseup', function(){
-        let val = $(this).val();
-        if(val <= 0){
-            $(this).val(null);
-        }
-    });
+    function validateNumberInput(){
+        $('input[type="number"]').on('keyup mouseup', function(){
+            let val = $(this).val();
+            if(val <= 0){
+                $(this).val(null);
+            }
+        });
+    }
 
     $('.collapsible').collapsible();
 
     $('#btn-actualizar').on('click', function(){
         window.location.href = 'myuser.html';
     });
+    
+    function btnCartEvent(){
+        $('.cart-btn').on('click', function(e){
+            e.preventDefault();
+            let quantity = $(this).parent().prev().children('input').val();
+            let idProduct = $(this).data('id');
+            console.log(quantity + ' ' + idProduct);
+            if(quantity > 0){
+                $.ajax({
+                   type: 'POST',
+                   url: 'SaleController',
+                   data: {action: 'addSale', quantity: quantity, idProduct: idProduct}
+                });
+            }
+         });
+    }
     
     function generateProductGrid(res){
         let productList = JSON.parse(res);
@@ -42,7 +67,7 @@ $(document).ready(() => {
                                 <div class="row">
                                     <div class="input-field inline col s12 m7"><input type="number" placeholder="Cantidad"></div>
                                     <div class="input-field inline">
-                                        <button class="btn accent-color"><i class="material-icons">shopping_cart</i></button>
+                                        <button data-id="${product.idProduct}" class="card-btn btn accent-color"><i class="material-icons">shopping_cart</i></button>
                                     </div>
                                 </div>
                             </form>
@@ -66,6 +91,7 @@ $(document).ready(() => {
             data: {idCategory: idCategory, action: 'category'}
         }).done(function(res){
             generateProductGrid(res);
+            validateNumberInput();
         });
     });
     // END OF CARD
@@ -77,6 +103,7 @@ $(document).ready(() => {
             data: {action: 'most-wanted'}
         }).done(function(res) {
             generateProductGrid(res);
+            btnCartEvent();
         });
     });
 });

@@ -5,14 +5,10 @@
  */
 package Controller;
 
-import Modelo.Category;
 import Modelo.Product;
 import Negocio.ProductBO;
 import Util.JsonConverter;
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;

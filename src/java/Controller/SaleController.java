@@ -5,17 +5,13 @@
  */
 package Controller;
 
-import Modelo.Category;
 import Modelo.Customer;
-import Modelo.Product;
-import Negocio.CategoryBO;
-import Negocio.CustomerBO;
-import Negocio.ProductBO;
+import Modelo.Sale;
+import Modelo.SaleDetail;
+import Negocio.SaleBO;
+import Negocio.SaleDetailBO;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.ArrayList;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -25,8 +21,15 @@ import javax.servlet.http.HttpSession;
  *
  * @author ASUS
  */
-@WebServlet(name = "UserController", urlPatterns = {"/UserController"})
-public class UserController extends HttpServlet {
+public class SaleController extends HttpServlet {
+
+    private SaleBO saleService;
+    private SaleDetailBO saleDetailService;
+
+    public SaleController() {
+        saleService = new SaleBO();
+        saleDetailService = new SaleDetailBO();
+    }
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,7 +40,6 @@ public class UserController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -50,6 +52,7 @@ public class UserController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
     }
 
     /**
@@ -64,10 +67,9 @@ public class UserController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String action = request.getParameter("action");
-        if(action.equals("login")){
-            login(request, response);
-        }  
-
+        if (action.equals("addSale")) {
+            addSale(request, response);
+        }
     }
 
     /**
@@ -80,31 +82,41 @@ public class UserController extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    private void login(HttpServletRequest request, HttpServletResponse response) 
-            throws ServletException, IOException {
-        CustomerBO customerService = new CustomerBO();
-        Customer c = new Customer();
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-        c.setUserName(username);
-        c.setPassword(password);
-        boolean isCorrect = customerService.login(c);
-        if (isCorrect) {
-            HttpSession session = request.getSession();
-            ProductBO productService = new ProductBO();
-            CategoryBO categoryService = new CategoryBO();
-            ArrayList<Product> listProducts = productService.filter();
-            ArrayList<Category> listCategory = categoryService.filter();
-            c = customerService.find(c);
-            session.setAttribute("user", c);
-            request.setAttribute("listProducts", listProducts);
-            request.setAttribute("categories", listCategory);
-            request.getRequestDispatcher("products.jsp").forward(request, response);
-        } else {
-            request.setAttribute("message", "Error");
-            request.getRequestDispatcher("index.jsp").forward(request, response);
+    private void addSale(HttpServletRequest request, HttpServletResponse response) {
+        HttpSession session = request.getSession();
+        int quantity = Integer.parseInt(request.getParameter("quantity"));
+        int idProduct = Integer.parseInt(request.getParameter("idProduct"));
+        Customer user = (Customer) session.getAttribute("user");
+        boolean doesCartExists = cartExists(session);
 
+        if (!doesCartExists) {
+            createSale(session, user.getIdCustomer(), "BUYING");
         }
+        Sale sale = (Sale) session.getAttribute("cart");
+        int idSale = sale.getIdSale();
+        String customerType = user.getCustomerType();
+        SaleDetail saleDetail = new SaleDetail();
+        saleDetail.setIdProduct(idProduct);
+        saleDetail.setIdSale(idSale);
+        saleDetail.setQuantity(quantity);
+        saleDetailService.addSaleDetail(customerType, saleDetail);
+    }
+
+    private boolean cartExists(HttpSession session) {
+        return session.getAttribute("cart") != null;
+    }
+
+    private void createSale(HttpSession session, int idCustomer, String buying) {
+        Sale sale = new Sale();
+        sale.setIdCustomer(idCustomer);
+        sale.setState(buying);
+        sale.setTotal(0);
+        sale.setTotalDiscount(0);
+
+        saleService.addSale(sale);
+        
+        sale = saleService.findSaleByStatus(idCustomer, "BUYING");
+        session.setAttribute("cart", sale);
     }
 
 }

@@ -69,6 +69,8 @@ public class CustomerImpl implements CustomerDao {
                 dto = new Customer();
                 dto.setUserName(rs.getString("userName"));
                 dto.setPassword(rs.getString("password"));
+                dto.setIdCustomer(rs.getInt("idCustomer"));
+                dto.setCustomerType(rs.getString("customerType"));
             }
             rs.close();
             stm.close();

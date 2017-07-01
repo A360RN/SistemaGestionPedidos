@@ -25,4 +25,8 @@ public class SaleBO {
         saleDao.insert(sale);
     }
     
+    public Sale findSaleByStatus(int idCustomer, String status){
+        return saleDao.findByState(idCustomer, status);
+    }
+    
 }

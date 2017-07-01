@@ -14,8 +14,7 @@
     <title>Document</title>
 </head>
 
-<body>
-    <%
+<%
         ArrayList<Category> listaCategorias = null;
         ArrayList<Product> listaProductos = null;
         if(request.getAttribute("listProducts")!= null){
@@ -25,8 +24,9 @@
             listaCategorias = (ArrayList<Category>)request.getAttribute("categories");
         }
         
-    %>
+%>
 
+<body>
     <nav class="navbar-material default-primary-color">
         <div class="nav-wrapper container">
             <a href="products.html" class="brand-logo left">Sunshine Andina</a>
@@ -81,7 +81,7 @@
                             <div class="row">
                                 <div class="input-field inline col s12 m7"><input type="number" placeholder="Cantidad"></div>
                                 <div class="input-field inline">
-                                    <button class="btn accent-color"><i class="material-icons">shopping_cart</i></button>
+                                    <button data-id="<%= p.getIdProduct()%>" class="cart-btn btn accent-color"><i class="material-icons">shopping_cart</i></button>
                                 </div>
                             </div>
                         </form>
