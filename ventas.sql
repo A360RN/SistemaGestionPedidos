@@ -76,11 +76,11 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `Ventas`.`Product` (
   `idProduct` INT NOT NULL,
-  `name` VARCHAR(30) NOT NULL,
-  `description` VARCHAR(200) NULL,
+  `name` VARCHAR(300) NOT NULL,
+  `description` VARCHAR(300) NULL,
   `price` DECIMAL(5,2) NOT NULL,
   `stock` INT NOT NULL,
-  `image` VARCHAR(100) NULL,
+  `image` VARCHAR(400) NULL,
   PRIMARY KEY (`idProduct`))
 ENGINE = InnoDB;
 
