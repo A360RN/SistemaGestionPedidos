@@ -14,7 +14,7 @@ import java.util.ArrayList;
  */
 public interface CustomerDao {
     public void insert(Customer dto);
-    public Customer find(Object f);
+    public Customer find(Customer f);
     public ArrayList<Customer> filter();
     public void update(Customer dto);
     public void delete(Object d);

@@ -58,22 +58,23 @@ public class CustomerImpl implements CustomerDao {
     
 
     @Override
-    public Customer find(Object f) {
+    public Customer find(Customer f) {
         Customer dto = null;
         try {
             cn = Conexion.ini();
-            query = "SELECT idCustomer FROM Customer WHERE userName='" + (String) f+"'";
+            query = "SELECT * FROM Customer WHERE userName='" + f.getUserName() +"'";
             stm = cn.createStatement();
             rs = stm.executeQuery(query);
             if (rs.next()) {
                 dto = new Customer();
-                dto.setUserName(rs.getString(1));
+                dto.setUserName(rs.getString("userName"));
+                dto.setPassword(rs.getString("password"));
             }
             rs.close();
             stm.close();
 
         } catch (SQLException e) {
-            System.out.println(e.toString());
+            e.printStackTrace();
         }
         return dto;
     }

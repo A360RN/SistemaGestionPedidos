@@ -41,4 +41,20 @@ public class CustomerBO{
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
+    public boolean login(Customer c){
+        String possiblePassword = c.getPassword();
+        
+        Customer user = customerDao.find(c);
+        String realPassword = "";
+        
+        if(user != null){
+            realPassword = user.getPassword();
+        }
+        
+        if(realPassword.equals(possiblePassword)){
+            return true;
+        }
+        return false;            
+    }
+    
 }

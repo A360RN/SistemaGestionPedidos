@@ -1,7 +1,9 @@
 
 import DaoImplementation.CategoryImpl;
 import Dao.*;
+import DaoImplementation.CustomerImpl;
 import Modelo.*;
+import Negocio.CustomerBO;
 import java.util.*;
 
 /*
@@ -16,9 +18,16 @@ import java.util.*;
  */
 public class test {
     public static void main(String[] args) {
-        Category cat= new Category(4,"cat4","ggggg");
-        CategoryImpl dx=new CategoryImpl();
-        dx.insert(cat);
+        Customer c = new Customer();
+        c.setUserName("OMARSEX");
+        c.setPassword("ELI423");
+        CustomerBO dao = new CustomerBO();
+        
+        boolean finded = dao.login(c);
+        System.out.println(finded);
+//        Category cat= new Category(4,"cat4","ggggg");
+//        CategoryImpl dx=new CategoryImpl();
+//        dx.insert(cat);
         //cat=dx.find("dos");
         //System.out.println(cat.getIdCategory());
         /*ProductCategory pc=new ProductCategory(3,5);
