@@ -39,7 +39,7 @@ public class ProductBO{
     }
 
     public ArrayList<Product> filterBySales() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return productDao.filterBySales();
     }
 
     public void update(Product dto) {

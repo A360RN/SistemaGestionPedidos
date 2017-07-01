@@ -19,16 +19,10 @@ $(document).ready(() => {
         window.location.href = 'myuser.html';
     });
     
-    $('.category-search').on('click', function(){
-        let idCategory = $(this).data('id');
-        $.ajax({
-            type: 'GET',
-            url: 'ProductController',
-            data: {idCategory: idCategory}
-        }).done(function(res){
-            let productList = JSON.parse(res);
+    function generateProductGrid(res){
+        let productList = JSON.parse(res);
             let newHtml = "";
-            
+
             productList.forEach((product) =>{
                 newHtml += `
                 <div class="col s12 m6 l4">
@@ -59,9 +53,30 @@ $(document).ready(() => {
                         </div>
                     </div>
                 </div>
-                `
+                `;
             });
             $('#product-grid').html(newHtml);
+    }
+
+    $('.category-search').on('click', function(){
+        let idCategory = $(this).data('id');
+        $.ajax({
+            type: 'GET',
+            url: 'ProductController',
+            data: {idCategory: idCategory, action: 'category'}
+        }).done(function(res){
+            generateProductGrid(res);
+        });
+    });
+    // END OF CARD
+
+    $('#most-wanted').on('click', function(){
+        $.ajax({
+            type: 'GET',
+            url: 'ProductController',
+            data: {action: 'most-wanted'}
+        }).done(function(res) {
+            generateProductGrid(res);
         });
     });
 });

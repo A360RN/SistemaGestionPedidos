@@ -51,10 +51,12 @@
     <div class="row">
         <div class="col s12 m3">
             <div class="collection">
+                <% if(listaCategorias != null){ %>
                 <%for(Category c : listaCategorias){%>
                 <a href="#!" class="category-search collection-item waves-effect" data-id="<%= c.getIdCategory()%>"><%= c.getName()%></a>
                 <% } %>
-                <a href="#!" class="collection-item waves-effect">Más Vendidos</a>
+                <% } %>
+                <a href="#!" id="most-wanted" class="collection-item waves-effect">Más Vendidos</a>
             </div>
         </div>
 

@@ -8,6 +8,7 @@ package Controller;
 import Modelo.Category;
 import Modelo.Product;
 import Negocio.ProductBO;
+import Util.JsonConverter;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import java.io.IOException;
@@ -33,7 +34,6 @@ public class ProductController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -46,13 +46,12 @@ public class ProductController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int idCategory = Integer.parseInt(request.getParameter("idCategory"));
-        System.out.println(idCategory);
-        ProductBO productService = new ProductBO();
-        ArrayList<Product> listProducts = productService.filterByCategory(idCategory);
-        Gson gson = new Gson();
-        String json = gson.toJson(listProducts);
-        response.getWriter().print(json);
+        String action = request.getParameter("action");
+        if (action.equals("category")) {
+            productByCategory(request, response);
+        } else if (action.equals("most-wanted")) {
+            mostWantedProducts(request, response);
+        }
     }
 
     /**
@@ -66,7 +65,7 @@ public class ProductController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
     }
 
     /**
@@ -78,5 +77,22 @@ public class ProductController extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+    private void productByCategory(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        int idCategory = Integer.parseInt(request.getParameter("idCategory"));
+        ProductBO productService = new ProductBO();
+        ArrayList<Product> listProducts = productService.filterByCategory(idCategory);
+        String json = JsonConverter.stringify(listProducts);
+        response.getWriter().print(json);
+    }
+
+    private void mostWantedProducts(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        ProductBO productService = new ProductBO();
+        ArrayList<Product> listProducts = productService.filterBySales();
+        String json = JsonConverter.stringify(listProducts);
+        response.getWriter().print(json);
+    }
 
 }

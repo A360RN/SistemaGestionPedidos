@@ -101,7 +101,6 @@ public class UserController extends HttpServlet {
         CustomerBO customerService = new CustomerBO();
         Customer c = new Customer();
         String username = request.getParameter("username");
-        System.out.println(username);
         String password = request.getParameter("password");
         c.setUserName(username);
         c.setPassword(password);
