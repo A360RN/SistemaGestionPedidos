@@ -105,7 +105,7 @@ public class UserController extends HttpServlet {
         c.setUserName(username);
         c.setPassword(password);
         boolean isCorrect = customerService.login(c);
-
+        System.out.println(isCorrect);
         if (isCorrect) {
             HttpSession session = request.getSession();
             ProductBO productService = new ProductBO();
