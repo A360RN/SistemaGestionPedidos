@@ -5,10 +5,67 @@
  */
 package Negocio;
 
+import Dao.ProductDao;
+import Dao.SaleDetailDao;
+import DaoImplementation.ProductImpl;
+import DaoImplementation.SaleDetailImpl;
+import Modelo.Product;
+import Modelo.SaleDetail;
+import Util.StringHelpers;
+import java.util.ArrayList;
+
 /**
  *
  * @author fernando
  */
 public class SaleDetailBO {
+
+    private SaleDetailDao saleDetailDao;
+    private ProductDao productDao;
     
+    public SaleDetailBO() {
+        saleDetailDao = new SaleDetailImpl();
+        productDao = new ProductImpl();
+    }
+
+    public void modifySaleDetail(String customerType, SaleDetail newSaleDetail){
+        int productId = newSaleDetail.getIdProduct();
+        Product product = productDao.find(productId);
+        double price = product.getPrice();
+        double subtotal = price * newSaleDetail.getQuantity();
+        double discount = 0.0;
+        
+        switch(customerType){
+            case "AFILIATED":
+                discount = subtotal * StringHelpers.AFFILIATED_DSCT;
+                break;
+            case "FREQUENT":
+                discount = subtotal * StringHelpers.FREQUENT_DSCT;
+        }
+        
+        newSaleDetail.setDiscount(discount);
+        newSaleDetail.setSubtotal(subtotal - discount);
+        
+    }
+    
+    public boolean addSaleDetail(String customerType, SaleDetail newSaleDetail) {
+        modifySaleDetail(customerType, newSaleDetail);
+        
+        SaleDetail oldSaleDetail = saleDetailDao.find(newSaleDetail.getIdProduct(), newSaleDetail.getIdSale());
+
+        if (oldSaleDetail != null) {
+            int newQuantity = newSaleDetail.getQuantity();
+            double newSubtotal = newSaleDetail.getSubtotal();
+            oldSaleDetail.setQuantity(oldSaleDetail.getQuantity() + newQuantity);
+            oldSaleDetail.setSubtotal(oldSaleDetail.getSubtotal() + newSubtotal);
+            saleDetailDao.update(oldSaleDetail);
+            return true;
+        }
+        saleDetailDao.insert(newSaleDetail);
+        return true;
+    }
+    
+    public ArrayList<SaleDetail> getAllSaleDetails(int idCustomer){
+        return saleDetailDao.filter(idCustomer);
+    }
 }

@@ -19,4 +19,5 @@ public interface SaleDao {
     public ArrayList<Sale> filter(Object f);
     public void update(Sale dto);
     public void delete(Object d);
+    public Sale findByState(int idCustomer, String state);
 }

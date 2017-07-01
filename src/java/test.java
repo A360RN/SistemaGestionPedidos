@@ -2,6 +2,7 @@
 import DaoImplementation.CategoryImpl;
 import Dao.*;
 import DaoImplementation.CustomerImpl;
+import DaoImplementation.SaleImpl;
 import Modelo.*;
 import Negocio.CustomerBO;
 import java.util.*;
@@ -18,13 +19,12 @@ import java.util.*;
  */
 public class test {
     public static void main(String[] args) {
-        Customer c = new Customer();
-        c.setUserName("OMARSEX");
-        c.setPassword("ELI423");
-        CustomerBO dao = new CustomerBO();
         
-        boolean finded = dao.login(c);
-        System.out.println(finded);
+//        SaleDao dao = new SaleImpl();
+//        Sale sale = dao.findByState(1, "BUYING");
+//        System.out.println(sale.getIdSale() + " "  + sale.getDateSale() + " " + sale.getState());
+//        
+        
 //        Category cat= new Category(4,"cat4","ggggg");
 //        CategoryImpl dx=new CategoryImpl();
 //        dx.insert(cat);
@@ -70,9 +70,13 @@ public class test {
         cus.setPassword("nueva**");
         CustomerDao daoc=new CustomerDao();
         daoc.update(cus);*/
-        /*Sale sas=new Sale(200,20,"cancelado",1);
-        SaleDao desas= new SaleDao();
-        desas.insert(sas);*/
+        Sale sas=new Sale(200,20,"CONFIRMED",1);
+        SaleDao desas= new SaleImpl();
+        desas.insert(sas);
+        sas=new Sale(180,20,"BUYING",1);
+        desas.insert(sas);
+        sas=new Sale(110,20,"PAID",1);
+        desas.insert(sas);
        /* Sale sas2;
         sas2=desas.find(4);
         System.out.println(sas2.getTotalDiscount());*/

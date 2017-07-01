@@ -14,7 +14,7 @@
 <body>
     <nav class="navbar-material default-primary-color">
         <div class="nav-wrapper container">
-            <a href="products.html" class="brand-logo left">Sunshine Andina</a>
+            <a href="products.jsp" class="brand-logo left">Sunshine Andina</a>
             <a href="#" data-activates="sidebar" class="button-collapse right"><i class="material-icons">menu</i></a>
             <ul class="right hide-on-med-and-down">
                 <li><a href="index.html">Login</a></li>

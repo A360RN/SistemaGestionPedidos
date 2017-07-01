@@ -5,10 +5,24 @@
  */
 package Negocio;
 
+import Dao.SaleDao;
+import DaoImplementation.SaleImpl;
+import Modelo.Sale;
+
 /**
  *
  * @author fernando
  */
 public class SaleBO {
+
+    private SaleDao saleDao;
+    
+    public SaleBO() {
+        saleDao = new SaleImpl();
+    }
+    
+    public void addSale(Sale sale){
+        saleDao.insert(sale);
+    }
     
 }

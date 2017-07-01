@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Dao;
+package DaoImplementation;
 
 import Connection.Conexion;
+import Dao.SaleDao;
 import Modelo.Sale;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -18,7 +19,7 @@ import java.util.ArrayList;
  *
  * @author fernando
  */
-public class SaleImpl {
+public class SaleImpl implements SaleDao{
 
     Connection cn = null;
     ResultSet rs = null;
@@ -121,6 +122,35 @@ public class SaleImpl {
             System.out.println(e.toString());
         } finally {
         }
+    }
+
+    @Override
+    public Sale findByState(int idCustomer, String state) {
+        Sale dto = null;
+        try {
+            cn = Conexion.ini();
+            query = "SELECT * FROM SALE WHERE idCustomer = ? AND state = ?";
+            ps = cn.prepareStatement(query);
+            ps.setInt(1, idCustomer);
+            ps.setString(2, state);
+            rs = ps.executeQuery();
+            
+            if (rs.next()) {
+                dto = new Sale();
+                dto.setIdSale(rs.getInt(1));
+                dto.setDateSale(rs.getString(2));
+                dto.setTotal(rs.getDouble(3));
+                dto.setTotalDiscount(rs.getInt(4));
+                dto.setState(rs.getString(5));
+                dto.setIdCustomer(rs.getInt(6));
+            }
+            rs.close();
+            ps.close();
+
+        } catch (SQLException e) {
+            System.out.println(e.toString());
+        }
+        return dto;
     }
 
 }

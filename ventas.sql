@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS `Ventas`.`Customer` (
   `address` VARCHAR(50) NOT NULL,
   `email` VARCHAR(45) NULL,
   `phoneNumber` VARCHAR(15) NOT NULL,
-  `customerType` VARCHAR(20) NOT NULL,
+  `customerType` VARCHAR(20) NOT NULL check (customerType in ('FREQUENT','AFFILIATED', 'NORMAL')),
   UNIQUE INDEX `userName_UNIQUE` (`userName` ASC),
   PRIMARY KEY (`idCustomer`))
 ENGINE = InnoDB;
@@ -45,9 +45,9 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `Ventas`.`Sale` (
   `idSale` INT NOT NULL AUTO_INCREMENT,
   `saleDate` TIMESTAMP NOT NULL,
-  `total` DECIMAL(10,0) NOT NULL,
+  `total` DECIMAL(10,0) NOT NULL DEFAULT 0,
   `totalDiscount` DECIMAL(10,0) NOT NULL DEFAULT 0,
-  `state` VARCHAR(20) NOT NULL,
+  `state` VARCHAR(20) NOT NULL check (state in ('PAID','CONFIRMED', 'BUYING')),
   `idCustomer` INT NOT NULL,
   PRIMARY KEY (`idSale`),
   INDEX `fk_Sale_Customer1_idx` (`idCustomer` ASC),
@@ -93,7 +93,7 @@ CREATE TABLE IF NOT EXISTS `Ventas`.`SaleDetail` (
   `idSale` INT NOT NULL,
   `quantity` INT NOT NULL,
   `discount` DECIMAL(10,0) NOT NULL DEFAULT 0,
-  `subtotal` DECIMAL(10,0) NOT NULL,
+  `subtotal` DECIMAL(10,0) NOT NULL DEFAULT 0,
   PRIMARY KEY (`idProduct`, `idSale`),
   INDEX `fk_SaleDetail_Sale1_idx` (`idSale` ASC),
   CONSTRAINT `fk_SaleDetail_Product1`
@@ -129,7 +129,6 @@ CREATE TABLE IF NOT EXISTS `Ventas`.`ProductCategory` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
-
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
