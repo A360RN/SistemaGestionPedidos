@@ -74,14 +74,14 @@ public class ProductImpl implements ProductDao{
         try {
             dtoList = new ArrayList<>();
             cn = Conexion.ini();
-            query = "SELECT * FROM Product ORDER BY name ASC";
+            query = "SELECT * FROM Product ORDER BY name ASC limit 9";
             stm = cn.createStatement();
             rs = stm.executeQuery(query);
             while (rs.next()) {
                 Product dto = new Product();
                 dto.setIdProduct(rs.getInt(1));
                 dto.setName(rs.getString(2));
-                dto.setDescription(rs.getString(4));
+                dto.setDescription(rs.getString(3));
                 dto.setPrice(rs.getDouble(4));
                 dto.setStock(rs.getInt(5));
                 dto.setImage(rs.getString(6));
@@ -101,6 +101,7 @@ public class ProductImpl implements ProductDao{
         try {
             dtoList = new ArrayList<>();
             cn = Conexion.ini();
+            System.out.println(f);
             query = "select p.idProduct,p.name,p.description,p.price,p.stock,p.image from"
                     + " Product p,ProductCategory pc where pc.idCategory='"+(int) f+"' AND p.idProduct=pc.idProduct";
             stm = cn.createStatement();

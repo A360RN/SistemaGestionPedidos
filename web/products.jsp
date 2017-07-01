@@ -1,3 +1,6 @@
+<%@page import="Modelo.Category"%>
+<%@page import="Modelo.Product"%>
+<%@page import="java.util.ArrayList"%>
 <!DOCTYPE html>
 <html>
 
@@ -12,6 +15,18 @@
 </head>
 
 <body>
+    <%
+        ArrayList<Category> listaCategorias = null;
+        ArrayList<Product> listaProductos = null;
+        if(request.getAttribute("listProducts")!= null){
+            listaProductos = (ArrayList<Product>)request.getAttribute("listProducts");
+        }
+        if(request.getAttribute("categories")!= null){
+            listaCategorias = (ArrayList<Category>)request.getAttribute("categories");
+        }
+        
+    %>
+
     <nav class="navbar-material default-primary-color">
         <div class="nav-wrapper container">
             <a href="products.html" class="brand-logo left">Sunshine Andina</a>
@@ -36,23 +51,28 @@
     <div class="row">
         <div class="col s12 m3">
             <div class="collection">
-                <a href="#!" class="collection-item waves-effect">Tipo producto 1</a>
-                <a href="#!" class="collection-item waves-effect">Tipo producto 2</a>
-                <a href="#!" class="collection-item waves-effect">Tipo producto 3</a>
-                <a href="#!" class="collection-item waves-effect">Más Vendidos</a>
+                <%for(Category c : listaCategorias){%>
+                <a href="#!" class="category-search collection-item waves-effect" data-id="<%= c.getIdCategory()%>"><%= c.getName()%></a>
+                <% } %>
+                <a href="#!" class="collection-item waves-effect">M�s Vendidos</a>
             </div>
         </div>
 
-        <div class="col s12 m9 right">
+        <div id="product-grid" class="col s12 m9 right">
+            <!-- empieza card -->
+            <% if(listaProductos != null){%>
+            <% for(Product p : listaProductos){%>
             <div class="col s12 m6 l4">
                 <div class="card sticky-action">
                     <div class="card-image">
-                        <img src="http://pe.sunshineandina.com/media/catalog/product/cache/3/small_image/9df78eab33525d08d6e5fb8d27136e95/a/b/abeto-base-web.jpg"
+                        <img src="<%= p.getImage()%>"
                             alt="" class="responsive-img">
                     </div>
                     <div class="card-content">
-                        <span class="card-title">Mi Producto</span>
-                        <a href="#!" class="activator">Más información<i class="material-icons right">info</i></a>
+                        <span class="card-title"><%= p.getName()%></span>
+                        <span class="green-text text-darken-2">S/. <%= p.getPrice()%></span>
+                        <br>
+                        <a href="#!" class="activator">Mas informacion<i class="material-icons right">info</i></a>
                     </div>
                     <div class="card-action">
                         <form action="#!">
@@ -65,80 +85,14 @@
                         </form>
                     </div>
                     <div class="card-reveal">
-                        <span class="card-title">Mi Producto<i class="material-icons right">close</i></span>
-                        <p class="flow-text">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quis delectus inventore, perferendis hic recusandae enim deserunt
-                            quia cumque vel sequi magnam odit, suscipit nisi, laboriosam dolor placeat minus nesciunt veritatis
-                            vero tempore commodi accusamus sunt. Commodi natus quo sunt mollitia dicta aut eum laudantium
-                            consequatur doloribus dolorum accusamus, maxime tenetur?
-                        </p>
+                        <span class="card-title"><%= p.getName()%><i class="material-icons right">close</i></span>
+                        <p class="flow-text"><%= p.getDescription()%></p>
                     </div>
                 </div>
             </div>
-
-            <div class="col s12 m6 l4">
-                <div class="card sticky-action">
-                    <div class="card-image">
-                        <img src="http://pe.sunshineandina.com/media/catalog/product/cache/3/small_image/9df78eab33525d08d6e5fb8d27136e95/a/b/abeto-base-web.jpg"
-                            alt="" class="responsive-img">
-                    </div>
-                    <div class="card-content">
-                        <span class="card-title">Mi Producto</span>
-                        <a href="#!" class="activator">Más información<i class="material-icons right">info</i></a>
-                    </div>
-                    <div class="card-action">
-                        <form action="#!">
-                            <div class="row">
-                                <div class="input-field inline col s12 m7"><input type="number" placeholder="Cantidad"></div>
-                                <div class="input-field inline">
-                                    <button class="btn accent-color"><i class="material-icons">shopping_cart</i></button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="card-reveal">
-                        <span class="card-title">Mi Producto<i class="material-icons right">close</i></span>
-                        <p class="flow-text">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quis delectus inventore, perferendis hic recusandae enim deserunt
-                            quia cumque vel sequi magnam odit, suscipit nisi, laboriosam dolor placeat minus nesciunt veritatis
-                            vero tempore commodi accusamus sunt. Commodi natus quo sunt mollitia dicta aut eum laudantium
-                            consequatur doloribus dolorum accusamus, maxime tenetur?
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col s12 m6 l4">
-                <div class="card sticky-action">
-                    <div class="card-image">
-                        <img src="http://pe.sunshineandina.com/media/catalog/product/cache/3/small_image/9df78eab33525d08d6e5fb8d27136e95/a/b/abeto-base-web.jpg"
-                            alt="" class="responsive-img">
-                    </div>
-                    <div class="card-content">
-                        <span class="card-title">Mi Producto</span>
-                        <a href="#!" class="activator">Más información<i class="material-icons right">info</i></a>
-                    </div>
-                    <div class="card-action">
-                        <form action="#!">
-                            <div class="row">
-                                <div class="input-field inline col s12 m7"><input type="number" placeholder="Cantidad"></div>
-                                <div class="input-field inline">
-                                    <button class="btn accent-color"><i class="material-icons">shopping_cart</i></button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="card-reveal">
-                        <span class="card-title">Mi Producto<i class="material-icons right">close</i></span>
-                        <p class="flow-text">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quis delectus inventore, perferendis hic recusandae enim deserunt
-                            quia cumque vel sequi magnam odit, suscipit nisi, laboriosam dolor placeat minus nesciunt veritatis
-                            vero tempore commodi accusamus sunt. Commodi natus quo sunt mollitia dicta aut eum laudantium
-                            consequatur doloribus dolorum accusamus, maxime tenetur?
-                        </p>
-                    </div>
-                </div>
-            </div>
+            <% } %>
+            <% }%>
+            <!-- termina card -->
         </div>
 
     </div>

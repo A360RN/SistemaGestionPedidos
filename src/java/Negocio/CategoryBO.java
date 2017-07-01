@@ -16,11 +16,11 @@ import java.util.ArrayList;
  */
 public class CategoryBO{
 
-    private CategoryDao categoryBO;
+    private CategoryDao categoryDao;
     
     public CategoryBO()
     {
-        categoryBO=new CategoryImpl();
+        categoryDao=new CategoryImpl();
     }
 
     public void insert(Category dto) {
@@ -32,7 +32,7 @@ public class CategoryBO{
     }
 
     public ArrayList<Category> filter() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return categoryDao.filter();
     }
 
     public void update(Category dto) {

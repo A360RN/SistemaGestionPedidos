@@ -5,6 +5,7 @@ import DaoImplementation.CustomerImpl;
 import DaoImplementation.SaleImpl;
 import Modelo.*;
 import Negocio.CustomerBO;
+import Negocio.ProductBO;
 import java.util.*;
 
 /*
@@ -20,11 +21,26 @@ import java.util.*;
 public class test {
     public static void main(String[] args) {
         
+        ProductBO productService = new ProductBO();
+        ArrayList<Product> lista = productService.filterByCategory(1);
+        for(Product p : lista){
+            System.out.println(p.getImage());
+        }
+        
+//        ProductBO productService = new ProductBO();
+//        ArrayList<Product> lista = productService.filter();
+//        for(Product p : lista){
+//            System.out.println(p.getImage());
+//        }
 //        SaleDao dao = new SaleImpl();
 //        Sale sale = dao.findByState(1, "BUYING");
 //        System.out.println(sale.getIdSale() + " "  + sale.getDateSale() + " " + sale.getState());
 //        
-        
+//          Customer c = new Customer();
+//          c.setUserName("OMARSEX");
+//          c.setPassword("ELI423");
+//          boolean finded = new CustomerBO().login(c);
+//          System.out.println(finded);
 //        Category cat= new Category(4,"cat4","ggggg");
 //        CategoryImpl dx=new CategoryImpl();
 //        dx.insert(cat);
@@ -70,13 +86,13 @@ public class test {
         cus.setPassword("nueva**");
         CustomerDao daoc=new CustomerDao();
         daoc.update(cus);*/
-        Sale sas=new Sale(200,20,"CONFIRMED",1);
-        SaleDao desas= new SaleImpl();
-        desas.insert(sas);
-        sas=new Sale(180,20,"BUYING",1);
-        desas.insert(sas);
-        sas=new Sale(110,20,"PAID",1);
-        desas.insert(sas);
+//        Sale sas=new Sale(200,20,"CONFIRMED",1);
+//        SaleDao desas= new SaleImpl();
+//        desas.insert(sas);
+//        sas=new Sale(180,20,"BUYING",1);
+//        desas.insert(sas);
+//        sas=new Sale(110,20,"PAID",1);
+//        desas.insert(sas);
        /* Sale sas2;
         sas2=desas.find(4);
         System.out.println(sas2.getTotalDiscount());*/

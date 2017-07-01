@@ -31,11 +31,11 @@ public class ProductBO{
     }
 
     public ArrayList<Product> filter() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return productDao.filter();
     }
 
     public ArrayList<Product> filterByCategory(Object f) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return productDao.filterByCategory(f);
     }
 
     public ArrayList<Product> filterBySales() {

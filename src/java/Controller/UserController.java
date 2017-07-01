@@ -5,10 +5,15 @@
  */
 package Controller;
 
+import Modelo.Category;
 import Modelo.Customer;
+import Modelo.Product;
+import Negocio.CategoryBO;
 import Negocio.CustomerBO;
+import Negocio.ProductBO;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -104,7 +109,13 @@ public class UserController extends HttpServlet {
 
         if (isCorrect) {
             HttpSession session = request.getSession();
+            ProductBO productService = new ProductBO();
+            CategoryBO categoryService = new CategoryBO();
+            ArrayList<Product> listProducts = productService.filter();
+            ArrayList<Category> listCategory = categoryService.filter();
             session.setAttribute("username", username);
+            request.setAttribute("listProducts", listProducts);
+            request.setAttribute("categories", listCategory);
             request.getRequestDispatcher("products.jsp").forward(request, response);
         } else {
             request.setAttribute("message", "Error");

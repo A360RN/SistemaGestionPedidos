@@ -41,12 +41,12 @@
                 <div class="row">
                     <div class="input-field col s12">
                         <i class="material-icons prefix">perm_identity</i>
-                        <input type="text" name="username">
+                        <input type="text" name="username" id="username">
                         <label for="username">Username</label>
                     </div>
                     <div class="input-field col s12">
                         <i class="material-icons prefix">vpn_key</i>
-                        <input type="password" name="password">
+                        <input type="password" name="password" id="password">
                         <label for="password">Password</label>
                     </div>
                     <div class="col s12 center-align">
