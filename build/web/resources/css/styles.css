@@ -1,0 +1,80 @@
+.dark-primary-color    { background: #388E3C; }
+.default-primary-color { background: #4CAF50; }
+.light-primary-color   { background: #C8E6C9; }
+.text-primary-color    { color: #FFFFFF; }
+.accent-color          { background: #FFC107; }
+.primary-text-color    { color: #212121; }
+.secondary-text-color  { color: #757575; }
+.divider-color         { border-color: #BDBDBD; }
+
+.navbar-material {
+    margin-bottom: 10px;
+}
+
+.user-form {
+    margin-top: 10px;
+}
+
+.page-footer .footer-copyright{
+    background-color: #4CAF50;
+    opacity: 1;
+}
+
+.card button.btn {
+    margin-top: 10px;
+}
+
+footer {
+    bottom: 0;
+    height: 2em;
+    left: 0;
+    position: relative;
+}
+
+th, td {
+    text-align: center;
+}
+
+tr td:first-child, tr th:first-child  {
+    width: 20%;
+}
+
+tr td:nth-child(2), tr th:nth-child(2) {
+    width: 5%;
+}
+
+tr td:nth-child(3), tr th:nth-child(3) {
+    width: 10%;
+    text-align: center;
+}
+
+tr td:nth-child(4), tr th:nth-child(4) {
+    width: 10%;
+}
+
+tr td:nth-child(5), tr th:nth-child(5) {
+    width: 10%;
+}
+
+tr td:nth-child(6), tr th:nth-child(6) {
+    width: 10%;
+}
+
+tr td:nth-child(7), tr th:nth-child(7) {
+    width: 10%;
+}
+
+div.divider {
+    margin-bottom: 10px;
+}
+
+button.btn{
+    line-height: 1.0em;
+    margin-bottom: 20px;
+}
+
+@media(min-height: 450px){
+    form div.center-align .btn{
+        margin-top: 10px;
+    }
+}
