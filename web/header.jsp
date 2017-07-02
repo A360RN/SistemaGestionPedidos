@@ -16,22 +16,33 @@
         <link rel="stylesheet" href="resources/css/styles.css">
         <title>Sunshine Andina</title>
     </head>
+
+    <%
+        boolean userFlag = false;
+        if (session.getAttribute("user") != null) {
+            userFlag = true;
+        }
+    %>
+
     <body>
         <nav class="navbar-material default-primary-color">
             <div class="nav-wrapper container">
-                <a href="products.jsp" class="brand-logo left">Sunshine Andina</a>
+                <a href="#!" class="brand-logo left">Sunshine Andina</a>
                 <a href="#" data-activates="sidebar" class="button-collapse right"><i class="material-icons">menu</i></a>
                 <ul class="right hide-on-med-and-down">
+                    <%if (!userFlag) {%>
                     <li><a href="index.jsp">Login</a></li>
                     <li><a href="register.jsp">Register</a></li>
-                    <li><a href="#">Logout</a></li>
+                    <%}else{%>
                     <li><a href="cart.jsp">Ver carrito<i class="material-icons right"> shopping_cart</i></a></li>
                     <li><a href="profile.jsp">Mi Perfil</a></li>
+                    <li><a href="UserController?action=logout">Logout</a></li>
+                    <%}%>
                 </ul>
                 <ul class="side-nav dark-primary-color" id="sidebar">
                     <li><a href="index.jsp">Login</a></li>
                     <li><a href="register.jsp">Register</a></li>
-                    <li><a href="#">Logout</a></li>
+                    <li><a href="UserController?action=logout">Logout</a></li>
                     <li><a href="cart.jsp">Ver carrito<i class="material-icons right">shopping_cart</i></a></li>
                     <li><a href="profile.jsp">Mi Perfil</a></li>
                 </ul>

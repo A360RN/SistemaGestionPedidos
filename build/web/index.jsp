@@ -18,10 +18,15 @@
                     </div>
                     <div class="col s12 center-align">
                         <button class="btn accent-color"><i class="material-icons left">play_arrow</i>Login</button>
-                        <button class="btn accent-color">Registrarse</button>
+
                     </div>
                 </div>
             </form>
+        </div>
+        <div class="row">
+            <div class="col s6 offset-s3 center-align">
+                <button class="btn accent-color"><i class="material-icons left">face</i>Registrarse</button>
+            </div>
         </div>
     </div>
 

@@ -49,6 +49,12 @@ public class UserController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String action = request.getParameter("action");
+        if(action.equals("logout")){
+            HttpSession session = request.getSession();
+            session.invalidate();
+            response.sendRedirect("index.jsp");
+        }
     }
 
     /**
@@ -96,8 +102,8 @@ public class UserController extends HttpServlet {
             ArrayList<Category> listCategory = categoryService.filter();
             c = customerService.find(c);
             session.setAttribute("user", c);
-            request.setAttribute("listProducts", listProducts);
-            request.setAttribute("categories", listCategory);
+            session.setAttribute("listProducts", listProducts);
+            session.setAttribute("categories", listCategory);
             request.getRequestDispatcher("products.jsp").forward(request, response);
         } else {
             request.setAttribute("message", "Error");

@@ -6,11 +6,11 @@
 <%
     ArrayList<Category> listaCategorias = null;
     ArrayList<Product> listaProductos = null;
-    if (request.getAttribute("listProducts") != null) {
-        listaProductos = (ArrayList<Product>) request.getAttribute("listProducts");
+    if (session.getAttribute("listProducts") != null) {
+        listaProductos = (ArrayList<Product>) session.getAttribute("listProducts");
     }
-    if (request.getAttribute("categories") != null) {
-        listaCategorias = (ArrayList<Category>) request.getAttribute("categories");
+    if (session.getAttribute("categories") != null) {
+        listaCategorias = (ArrayList<Category>) session.getAttribute("categories");
     }
 
 %>
