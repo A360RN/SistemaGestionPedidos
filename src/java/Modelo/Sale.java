@@ -20,6 +20,7 @@ public class Sale implements Serializable {
     private double totalDiscount;
     private String state;
     private int idCustomer;
+    private List<SaleDetail> saleDetails;
 
     public Sale() {
     }
@@ -77,6 +78,14 @@ public class Sale implements Serializable {
 
     public void setState(String state) {
         this.state = state;
+    }
+
+    public List<SaleDetail> getSaleDetails() {
+        return saleDetails;
+    }
+
+    public void setSaleDetails(List<SaleDetail> saleDetails) {
+        this.saleDetails = saleDetails;
     }
 
 }

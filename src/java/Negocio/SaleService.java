@@ -5,9 +5,16 @@
  */
 package Negocio;
 
+import Dao.ProductDao;
 import Dao.SaleDao;
+import Dao.SaleDetailDao;
+import DaoImplementation.ProductImpl;
+import DaoImplementation.SaleDetailImpl;
 import DaoImplementation.SaleImpl;
+import Modelo.Product;
 import Modelo.Sale;
+import Modelo.SaleDetail;
+import java.util.ArrayList;
 
 /**
  *
@@ -16,9 +23,13 @@ import Modelo.Sale;
 public class SaleService {
 
     private SaleDao saleDao;
+    private SaleDetailDao saleDetailDao;
+    private ProductDao productDao;
     
     public SaleService() {
         saleDao = new SaleImpl();
+        saleDetailDao = new SaleDetailImpl();
+        productDao = new ProductImpl();
     }
     
     public void addSale(Sale sale){
@@ -32,6 +43,27 @@ public class SaleService {
     public void confirmSale(Sale cart) {
         cart.setState("CONFIRMED");
         saleDao.update(cart);
+    }
+    
+    public void deleteCart(Sale cart){
+        saleDetailDao.deleteBySale(cart.getIdSale());
+        saleDao.delete(cart.getIdSale());
+    }
+    
+    public ArrayList<Sale> findLastSales(int idCustomer){
+        ArrayList<Sale> lastSales = saleDao.findLastSales(idCustomer);
+        
+        for(Sale s : lastSales){
+            ArrayList<SaleDetail> saleDetails = saleDetailDao.findBySale(s.getIdSale());
+            
+            for(SaleDetail detail: saleDetails){
+                Product p = productDao.find(detail.getIdProduct());
+                detail.setProduct(p);
+            }
+            s.setSaleDetails(saleDetails);
+        }
+        
+        return lastSales;
     }
     
 }

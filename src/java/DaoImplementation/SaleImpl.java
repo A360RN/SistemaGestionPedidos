@@ -153,4 +153,32 @@ public class SaleImpl implements SaleDao{
         return dto;
     }
 
+    @Override
+    public ArrayList<Sale> findLastSales(int idCustomer) {
+        ArrayList<Sale> saleList = new ArrayList<>();
+        try {
+            cn = Conexion.ini();
+            query = "SELECT * FROM Sale WHERE idCustomer = ? AND "
+                    + "state NOT IN ('BUYING') ORDER BY saleDate  LIMIT 3";
+            ps = cn.prepareStatement(query);
+            ps.setInt(1, idCustomer);
+            rs = ps.executeQuery();
+            
+            while(rs.next()){
+                Sale s = new Sale();
+                s.setIdSale(rs.getInt("idSale"));
+                s.setDateSale(rs.getString("saleDate"));
+                s.setTotal(rs.getDouble("total"));
+                s.setTotalDiscount(rs.getDouble("totalDiscount"));
+                s.setState(rs.getString("state"));
+                s.setIdCustomer(idCustomer);
+                
+                saleList.add(s);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return saleList;
+    }
+
 }

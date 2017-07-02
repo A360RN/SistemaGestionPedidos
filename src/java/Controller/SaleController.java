@@ -56,6 +56,9 @@ public class SaleController extends HttpServlet {
         String action = request.getParameter("action");
         if (action.equals("cart")) {
             showCart(request, response);
+        } else if(action.equals("last-sales")){
+            findLastSales(request, response);
+            response.sendRedirect("profile.jsp");
         }
     }
 
@@ -75,6 +78,8 @@ public class SaleController extends HttpServlet {
             addSale(request, response);
         } else if (action.equals("save-cart")) {
             confirmCart(request, response);
+        } else if (action.equals("delete-cart")) {
+            deleteCart(request, response);
         }
     }
 
@@ -138,7 +143,8 @@ public class SaleController extends HttpServlet {
 
     }
 
-    private void confirmCart(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    private void confirmCart(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         HttpSession session = request.getSession();
         Sale cart = (Sale) session.getAttribute("cart");
         saleService.confirmSale(cart);
@@ -147,4 +153,21 @@ public class SaleController extends HttpServlet {
         session.setAttribute("message", "Compra guardada!");
     }
 
+    private void deleteCart(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        Sale cart = (Sale) session.getAttribute("cart");
+        saleService.deleteCart(cart);
+        session.removeAttribute("cart");
+        session.removeAttribute("cartDetails");
+    }
+
+    private void findLastSales(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        Customer user = (Customer)session.getAttribute("user");
+        int idCustomer = user.getIdCustomer();
+        ArrayList<Sale> lastSales = saleService.findLastSales(idCustomer);
+        session.setAttribute("lastSales", lastSales);
+    }
 }

@@ -19,7 +19,7 @@ import java.util.ArrayList;
  *
  * @author fernando
  */
-public class SaleDetailImpl implements SaleDetailDao{
+public class SaleDetailImpl implements SaleDetailDao {
 
     Connection cn = null;
     ResultSet rs = null;
@@ -46,11 +46,11 @@ public class SaleDetailImpl implements SaleDetailDao{
     }
 
     @Override
-    public SaleDetail find(Object fp,Object fs) {
+    public SaleDetail find(Object fp, Object fs) {
         SaleDetail dto = null;
         try {
             cn = Conexion.ini();
-            query = "SELECT * FROM SaleDetail where idProduct='"+(int) fp +"' AND idSale='"+(int) fs +"'";
+            query = "SELECT * FROM SaleDetail where idProduct='" + (int) fp + "' AND idSale='" + (int) fs + "'";
             stm = cn.createStatement();
             rs = stm.executeQuery(query);
             if (rs.next()) {
@@ -71,12 +71,12 @@ public class SaleDetailImpl implements SaleDetailDao{
     }
 
     @Override
-    public ArrayList<SaleDetail> filter(Object f) {
+    public ArrayList<SaleDetail> findBySale(Object f) {
         ArrayList<SaleDetail> dtoList = null;
         try {
             dtoList = new ArrayList<>();
             cn = Conexion.ini();
-            query = "SELECT * FROM SaleDetail WHERE idSale='" + (int) f+"'";
+            query = "SELECT * FROM SaleDetail WHERE idSale='" + (int) f + "'";
             stm = cn.createStatement();
             rs = stm.executeQuery(query);
             while (rs.next()) {
@@ -102,11 +102,11 @@ public class SaleDetailImpl implements SaleDetailDao{
             cn = Conexion.ini();
             query = "UPDATE SaleDetail set quantity=?,discount=?,subtotal=? where idProduct=? AND idSale=?";
             ps = cn.prepareStatement(query);
-            ps.setInt(1,dto.getQuantity());
-            ps.setDouble(2,dto.getDiscount());
-            ps.setDouble(3,dto.getSubtotal());
-            ps.setInt(4,dto.getIdProduct());
-            ps.setInt(5,dto.getIdSale());
+            ps.setInt(1, dto.getQuantity());
+            ps.setDouble(2, dto.getDiscount());
+            ps.setDouble(3, dto.getSubtotal());
+            ps.setInt(4, dto.getIdProduct());
+            ps.setInt(5, dto.getIdSale());
             ps.executeUpdate();
             ps.close();
         } catch (SQLException e) {
@@ -116,16 +116,30 @@ public class SaleDetailImpl implements SaleDetailDao{
     }
 
     @Override
-    public void delete(Object dp,Object ds) {
+    public void delete(Object dp, Object ds) {
         try {
             cn = Conexion.ini();
-            query = "DELETE FROM SaleDetail WHERE idProduct='" +(int) dp+"' AND idSale='"+(int) ds+"'";
+            query = "DELETE FROM SaleDetail WHERE idProduct='" + (int) dp + "' AND idSale='" + (int) ds + "'";
             ps = cn.prepareStatement(query);
             ps.executeUpdate();
             ps.close();
         } catch (SQLException e) {
             System.out.println(e.toString());
         } finally {
+        }
+    }
+
+    @Override
+    public void deleteBySale(int idSale) {
+        try {
+            cn = Conexion.ini();
+            query = "DELETE FROM SaleDetail WHERE idSale = ?";
+            ps = cn.prepareStatement(query);
+            ps.setInt(1, idSale);
+            ps.executeUpdate();
+            ps.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 

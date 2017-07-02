@@ -68,7 +68,7 @@ public class SaleDetailService {
     }
     
     public ArrayList<SaleDetail> getCartDetails(int idSale){
-        ArrayList<SaleDetail> cartDetails = saleDetailDao.filter(idSale);
+        ArrayList<SaleDetail> cartDetails = saleDetailDao.findBySale(idSale);
         for(SaleDetail d: cartDetails){
             Product p = productDao.find(d.getIdProduct());
             d.setProduct(p);

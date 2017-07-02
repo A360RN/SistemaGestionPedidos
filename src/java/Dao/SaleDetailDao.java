@@ -16,8 +16,9 @@ public interface SaleDetailDao {
 
     public void insert(SaleDetail dto);
     public SaleDetail find(Object fp,Object fs);
-    public ArrayList<SaleDetail> filter(Object f);
+    public ArrayList<SaleDetail> findBySale(Object f);
     public void update(SaleDetail dto);
     public void delete(Object dp,Object ds);
+    public void deleteBySale(int idSale);
 
 }

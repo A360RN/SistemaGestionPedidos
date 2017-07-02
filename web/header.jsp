@@ -36,7 +36,7 @@
                     <%}else{%>
                     <li><a href="products.jsp">Tienda<i class="material-icons right">store</i></a></li>
                     <li><a href="SaleController?action=cart">Ver carrito<i class="material-icons right"> shopping_cart</i></a></li>
-                    <li><a href="profile.jsp">Mi Perfil</a></li>
+                    <li><a href="SaleController?action=last-sales">Mi Perfil</a></li>
                     <li><a href="UserController?action=logout">Salir</a></li>
                     <%}%>
                 </ul>

@@ -46,6 +46,9 @@
     <div class="col s12 center-align">
         <button id="save-cart-btn" class="btn accent-color waves-effect">Guardar Pedido</button>
     </div>
+    <div class="col s12 center-align">
+        <button id="delete-cart-btn" class="btn red darken-2 waves-effect">Eliminar Pedido</button>
+    </div>        
     <%}else{%>
     <h1 class="center-align">CARRITO VACIO...</h1>
     <%}%>

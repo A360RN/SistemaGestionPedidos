@@ -9,7 +9,32 @@ $(document).ready(() => {
 
     function init() {
         validateNumberInput();
-        btnCartEvent();
+        addProduct();
+        cartButtonEvent();
+    }
+
+    function cartButtonEvent() {
+        $('#save-cart-btn').on('click', function () {
+            $.ajax({
+                type: 'POST',
+                url: 'SaleController',
+                data: {action: 'save-cart'},
+                success: function () {
+                    window.location.href = "products.jsp";
+                }
+            });
+        });
+
+        $('#delete-cart-btn').on('click', function () {
+            $.ajax({
+                type: 'POST',
+                url: 'SaleController',
+                data: {action: 'delete-cart'},
+                success: function () {
+                    window.location.href = "products.jsp";
+                }
+            });
+        });
     }
 
     // si val en cantidad <= 0
@@ -28,7 +53,7 @@ $(document).ready(() => {
         window.location.href = 'myuser.html';
     });
 
-    function btnCartEvent() {
+    function addProduct() {
         $('.cart-btn').on('click', function (e) {
             e.preventDefault();
             let quantity = $(this).parent().prev().children('input').val();
@@ -38,7 +63,7 @@ $(document).ready(() => {
                     type: 'POST',
                     url: 'SaleController',
                     data: {action: 'addSale', quantity: quantity, idProduct: idProduct}
-                }).done(function(){
+                }).done(function () {
                     $('#message').text("Producto agregado al carrito");
                 });
             }
@@ -95,7 +120,6 @@ $(document).ready(() => {
             validateNumberInput();
         });
     });
-    // END OF CARD
 
     $('#most-wanted').on('click', function () {
         $.ajax({
@@ -105,17 +129,6 @@ $(document).ready(() => {
         }).done(function (res) {
             generateProductGrid(res);
             btnCartEvent();
-        });
-    });
-
-    $('#save-cart-btn').on('click', function () {
-        $.ajax({
-            type: 'POST',
-            url: 'SaleController',
-            data: {action: 'save-cart'},
-            success: function () {
-                window.location.href = "products.jsp";
-            }
         });
     });
 });

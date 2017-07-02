@@ -20,4 +20,5 @@ public interface SaleDao {
     public void update(Sale dto);
     public void delete(Object d);
     public Sale findByState(int idCustomer, String state);
+    public ArrayList<Sale> findLastSales(int idCustomer);
 }
