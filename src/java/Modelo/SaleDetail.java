@@ -5,19 +5,25 @@
  */
 package Modelo;
 
+import java.io.Serializable;
+
 /**
  *
  * @author fernando
  */
-public class SaleDetail {
-    
+public class SaleDetail implements Serializable {
+
     private int idProduct;
     private int idSale;
     private int quantity;
     private double discount;
     private double subtotal;
+    private Product product;
+    private Sale sale;
 
-    public SaleDetail(){}
+    public SaleDetail() {
+    }
+
     public SaleDetail(int idProduct, int idSale, int quantity, double discount, double subtotal) {
         this.idProduct = idProduct;
         this.idSale = idSale;
@@ -66,5 +72,20 @@ public class SaleDetail {
         this.subtotal = subtotal;
     }
 
-    
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
+    public Sale getSale() {
+        return sale;
+    }
+
+    public void setSale(Sale sale) {
+        this.sale = sale;
+    }
+
 }

@@ -28,5 +28,10 @@ public class SaleService {
     public Sale findSaleByStatus(int idCustomer, String status){
         return saleDao.findByState(idCustomer, status);
     }
+
+    public void confirmSale(Sale cart) {
+        cart.setState("CONFIRMED");
+        saleDao.update(cart);
+    }
     
 }

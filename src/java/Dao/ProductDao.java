@@ -18,6 +18,7 @@ public interface ProductDao {
     public Product find(Object f);
     public ArrayList<Product> filter();
     public ArrayList<Product> filterByCategory(Object f);
+    public ArrayList<Product> filterByOrder(int idSale);
     public ArrayList<Product> filterBySales();
     public void update(Product dto);
     public void delete(Object d);

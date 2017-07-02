@@ -15,7 +15,7 @@ import java.util.ArrayList;
  *
  * @author fernando
  */
-public class ProductImpl implements ProductDao{
+public class ProductImpl implements ProductDao {
 
     Connection cn = null;
     ResultSet rs = null;
@@ -24,7 +24,7 @@ public class ProductImpl implements ProductDao{
     PreparedStatement ps = null;
 
     @Override
-     public void insert(Product dto) {
+    public void insert(Product dto) {
         try {
             cn = Conexion.ini();
             query = "INSERT INTO Product VALUES(?,?,?,?,?,?)";
@@ -41,7 +41,7 @@ public class ProductImpl implements ProductDao{
             System.out.println(e.toString());
         }
     }
-     
+
     @Override
     public Product find(Object f) {
         Product dto = null;
@@ -103,7 +103,7 @@ public class ProductImpl implements ProductDao{
             cn = Conexion.ini();
             System.out.println(f);
             query = "select p.idProduct,p.name,p.description,p.price,p.stock,p.image from"
-                    + " Product p,ProductCategory pc where pc.idCategory='"+(int) f+"' AND p.idProduct=pc.idProduct";
+                    + " Product p,ProductCategory pc where pc.idCategory='" + (int) f + "' AND p.idProduct=pc.idProduct";
             stm = cn.createStatement();
             rs = stm.executeQuery(query);
             while (rs.next()) {
@@ -181,5 +181,30 @@ public class ProductImpl implements ProductDao{
             System.out.println(e.toString());
         } finally {
         }
+    }
+
+    @Override
+    public ArrayList<Product> filterByOrder(int idSale) {
+        ArrayList<Product> productList = new ArrayList<>();
+        try {
+            cn = Conexion.ini();
+            query = "SELECT * FROM product p JOIN saledetail sd ON p.idProduct = sd.idProduct JOIN sale s ON "
+                    + "sd.idSale = s.idSale WHERE s.idSale = ?  ";
+            ps = cn.prepareStatement(query);
+            ps.setInt(1, idSale);
+            rs = ps.executeQuery();
+            while(rs.next()){
+                Product p = new Product();
+                p.setIdProduct(rs.getInt("p.idProduct"));
+                p.setName(rs.getString("name"));
+                p.setPrice(rs.getDouble("price"));
+                
+                productList.add(p);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+        return productList;
     }
 }

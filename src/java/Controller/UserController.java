@@ -8,9 +8,11 @@ package Controller;
 import Modelo.Category;
 import Modelo.Customer;
 import Modelo.Product;
+import Modelo.Sale;
 import Negocio.CategoryService;
 import Negocio.CustomerService;
 import Negocio.ProductService;
+import Negocio.SaleService;
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
@@ -30,11 +32,13 @@ public class UserController extends HttpServlet {
     private CustomerService customerService;
     private CategoryService categoryService;
     private ProductService productService;
+    private SaleService saleService;
 
     public UserController() {
         customerService = new CustomerService();
         categoryService = new CategoryService();
         productService = new ProductService();
+        saleService = new SaleService();
     }
 
     /**
@@ -109,6 +113,7 @@ public class UserController extends HttpServlet {
             ArrayList<Category> listCategory = categoryService.filter();
             c = customerService.find(c);
             session.setAttribute("user", c);
+            checkForCart(request, response);
             session.setAttribute("listProducts", listProducts);
             session.setAttribute("categories", listCategory);
             request.getRequestDispatcher("products.jsp").forward(request, response);
@@ -116,6 +121,16 @@ public class UserController extends HttpServlet {
             request.setAttribute("message", "Error");
             request.getRequestDispatcher("index.jsp").forward(request, response);
 
+        }
+    }
+    
+    private void checkForCart(HttpServletRequest request, HttpServletResponse response){
+        
+        HttpSession session = request.getSession();
+        Customer user = (Customer)session.getAttribute("user");
+        Sale cart = saleService.findSaleByStatus(user.getIdCustomer(), "BUYING");
+        if(cart != null){
+            session.setAttribute("cart", cart);
         }
     }
 

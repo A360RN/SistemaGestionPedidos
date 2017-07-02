@@ -38,6 +38,8 @@ $(document).ready(() => {
                     type: 'POST',
                     url: 'SaleController',
                     data: {action: 'addSale', quantity: quantity, idProduct: idProduct}
+                }).done(function(){
+                    $('#message').text("Producto agregado al carrito");
                 });
             }
         });
@@ -103,6 +105,17 @@ $(document).ready(() => {
         }).done(function (res) {
             generateProductGrid(res);
             btnCartEvent();
+        });
+    });
+
+    $('#save-cart-btn').on('click', function () {
+        $.ajax({
+            type: 'POST',
+            url: 'SaleController',
+            data: {action: 'save-cart'},
+            success: function () {
+                window.location.href = "products.jsp";
+            }
         });
     });
 });

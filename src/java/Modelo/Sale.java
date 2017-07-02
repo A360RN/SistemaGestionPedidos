@@ -5,12 +5,15 @@
  */
 package Modelo;
 
+import java.io.Serializable;
+import java.util.List;
+
 /**
  *
  * @author fernando
  */
-public class Sale {
-    
+public class Sale implements Serializable {
+
     private int idSale;
     private String dateSale;
     private double total;
@@ -18,11 +21,13 @@ public class Sale {
     private String state;
     private int idCustomer;
 
-    public Sale(){}
-    public Sale(double total, double totalDiscount,String state, int idCustomer) {
+    public Sale() {
+    }
+
+    public Sale(double total, double totalDiscount, String state, int idCustomer) {
         this.total = total;
         this.totalDiscount = totalDiscount;
-        this.state=state;
+        this.state = state;
         this.idCustomer = idCustomer;
     }
 
@@ -73,6 +78,5 @@ public class Sale {
     public void setState(String state) {
         this.state = state;
     }
-    
-    
+
 }

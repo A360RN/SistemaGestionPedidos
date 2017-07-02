@@ -67,7 +67,13 @@ public class SaleDetailService {
         return true;
     }
     
-    public ArrayList<SaleDetail> getAllSaleDetails(int idSale){
-        return saleDetailDao.filter(idSale);
+    public ArrayList<SaleDetail> getCartDetails(int idSale){
+        ArrayList<SaleDetail> cartDetails = saleDetailDao.filter(idSale);
+        for(SaleDetail d: cartDetails){
+            Product p = productDao.find(d.getIdProduct());
+            d.setProduct(p);
+        }
+        
+        return cartDetails;
     }
 }

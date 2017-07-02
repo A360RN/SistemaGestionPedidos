@@ -15,6 +15,8 @@
 
 %>
 
+<jsp:include page="flash-message.jsp"></jsp:include>
+
 <div class="row">
     <div class="col s12 m3">
         <div class="collection">
