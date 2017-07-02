@@ -54,8 +54,8 @@ CREATE TABLE IF NOT EXISTS `Ventas`.`Sale` (
   CONSTRAINT `fk_Sale_Customer1`
     FOREIGN KEY (`idCustomer`)
     REFERENCES `Ventas`.`Customer` (`idCustomer`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE no action
+    ON UPDATE no action)
 ENGINE = InnoDB;
 
 
@@ -99,13 +99,13 @@ CREATE TABLE IF NOT EXISTS `Ventas`.`SaleDetail` (
   CONSTRAINT `fk_SaleDetail_Product1`
     FOREIGN KEY (`idProduct`)
     REFERENCES `Ventas`.`Product` (`idProduct`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE cascade
+    ON UPDATE cascade,
   CONSTRAINT `fk_SaleDetail_Sale1`
     FOREIGN KEY (`idSale`)
     REFERENCES `Ventas`.`Sale` (`idSale`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE no action
+    ON UPDATE no action)
 ENGINE = InnoDB;
 
 

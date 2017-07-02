@@ -33,7 +33,6 @@ $(document).ready(() => {
             e.preventDefault();
             let quantity = $(this).parent().prev().children('input').val();
             let idProduct = $(this).data('id');
-            console.log(quantity + ' ' + idProduct);
             if(quantity > 0){
                 $.ajax({
                    type: 'POST',
