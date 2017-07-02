@@ -14,10 +14,10 @@ import java.util.ArrayList;
  *
  * @author fernando
  */
-public class CustomerBO{
+public class CustomerService{
 
     private CustomerDao customerDao;
-    public CustomerBO()
+    public CustomerService()
     {
         customerDao= new CustomerImpl();
     }

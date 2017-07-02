@@ -55,7 +55,8 @@
                 </div>
                 <div class="card-reveal">
                     <span class="card-title"><%= p.getName()%><i class="material-icons right">close</i></span>
-                    <p class="flow-text"><%= p.getDescription()%></p>
+                    <span class="green-text text-darken-2">S/. <%= p.getPrice()%></span>
+                    <p><%= p.getDescription()%></p>
                 </div>
             </div>
         </div>

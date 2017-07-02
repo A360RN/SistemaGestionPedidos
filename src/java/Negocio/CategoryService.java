@@ -14,11 +14,11 @@ import java.util.ArrayList;
  *
  * @author fernando
  */
-public class CategoryBO{
+public class CategoryService{
 
     private CategoryDao categoryDao;
     
-    public CategoryBO()
+    public CategoryService()
     {
         categoryDao=new CategoryImpl();
     }

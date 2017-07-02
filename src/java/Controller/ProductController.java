@@ -6,7 +6,7 @@
 package Controller;
 
 import Modelo.Product;
-import Negocio.ProductBO;
+import Negocio.ProductService;
 import Util.JsonConverter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -77,7 +77,7 @@ public class ProductController extends HttpServlet {
     private void productByCategory(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         int idCategory = Integer.parseInt(request.getParameter("idCategory"));
-        ProductBO productService = new ProductBO();
+        ProductService productService = new ProductService();
         ArrayList<Product> listProducts = productService.filterByCategory(idCategory);
         String json = JsonConverter.stringify(listProducts);
         response.getWriter().print(json);
@@ -85,7 +85,7 @@ public class ProductController extends HttpServlet {
 
     private void mostWantedProducts(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        ProductBO productService = new ProductBO();
+        ProductService productService = new ProductService();
         ArrayList<Product> listProducts = productService.filterBySales();
         String json = JsonConverter.stringify(listProducts);
         response.getWriter().print(json);

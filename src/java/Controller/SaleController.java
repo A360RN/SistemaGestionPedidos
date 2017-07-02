@@ -8,9 +8,10 @@ package Controller;
 import Modelo.Customer;
 import Modelo.Sale;
 import Modelo.SaleDetail;
-import Negocio.SaleBO;
-import Negocio.SaleDetailBO;
+import Negocio.SaleService;
+import Negocio.SaleDetailService;
 import java.io.IOException;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -23,12 +24,12 @@ import javax.servlet.http.HttpSession;
  */
 public class SaleController extends HttpServlet {
 
-    private SaleBO saleService;
-    private SaleDetailBO saleDetailService;
+    private SaleService saleService;
+    private SaleDetailService saleDetailService;
 
     public SaleController() {
-        saleService = new SaleBO();
-        saleDetailService = new SaleDetailBO();
+        saleService = new SaleService();
+        saleDetailService = new SaleDetailService();
     }
 
     /**
@@ -52,7 +53,10 @@ public class SaleController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        String action = request.getParameter("action");
+        if (action.equals("cart")) {
+            showCart(request, response);
+        }
     }
 
     /**
@@ -114,9 +118,23 @@ public class SaleController extends HttpServlet {
         sale.setTotalDiscount(0);
 
         saleService.addSale(sale);
-        System.out.println("ESTOY AGREGANDO VENTA");
         sale = saleService.findSaleByStatus(idCustomer, "BUYING");
         session.setAttribute("cart", sale);
+    }
+
+    private void showCart(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        HttpSession session = request.getSession();
+
+        if (session.getAttribute("cart") != null) {
+            Sale shoppingCart = (Sale)session.getAttribute("cart");
+            int idSale = shoppingCart.getIdSale();
+            
+            ArrayList<SaleDetail> saleDetails = saleDetailService.getAllSaleDetails(idSale);
+            session.setAttribute("cartDetails", saleDetails);
+            request.getRequestDispatcher("cart.jsp");
+        }
+        response.sendRedirect("cart.jsp");
+
     }
 
 }

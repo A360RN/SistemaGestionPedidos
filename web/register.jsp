@@ -12,7 +12,7 @@
                     </div>
                     <div class="input-field inline col s12 m6">
                         <input type="password" id="password">
-                        <label for="password">ContraseÃ±a</label>
+                        <label for="password">Contraseña</label>
                     </div>
                     <div class="input-field inline col s12 m6">
                         <input type="text" id="firstname">

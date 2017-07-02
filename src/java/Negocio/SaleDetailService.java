@@ -18,12 +18,12 @@ import java.util.ArrayList;
  *
  * @author fernando
  */
-public class SaleDetailBO {
+public class SaleDetailService {
 
     private SaleDetailDao saleDetailDao;
     private ProductDao productDao;
     
-    public SaleDetailBO() {
+    public SaleDetailService() {
         saleDetailDao = new SaleDetailImpl();
         productDao = new ProductImpl();
     }
@@ -67,7 +67,7 @@ public class SaleDetailBO {
         return true;
     }
     
-    public ArrayList<SaleDetail> getAllSaleDetails(int idCustomer){
-        return saleDetailDao.filter(idCustomer);
+    public ArrayList<SaleDetail> getAllSaleDetails(int idSale){
+        return saleDetailDao.filter(idSale);
     }
 }

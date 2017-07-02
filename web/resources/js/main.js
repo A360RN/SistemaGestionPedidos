@@ -4,19 +4,19 @@ $(document).ready(() => {
     });
 
     $('select').material_select();
-    
+
     init();
-    
-    function init(){
+
+    function init() {
         validateNumberInput();
         btnCartEvent();
     }
 
     // si val en cantidad <= 0
-    function validateNumberInput(){
-        $('input[type="number"]').on('keyup mouseup', function(){
+    function validateNumberInput() {
+        $('input[type="number"]').on('keyup mouseup', function () {
             let val = $(this).val();
-            if(val <= 0){
+            if (val <= 0) {
                 $(this).val(null);
             }
         });
@@ -24,31 +24,30 @@ $(document).ready(() => {
 
     $('.collapsible').collapsible();
 
-    $('#btn-actualizar').on('click', function(){
+    $('#btn-actualizar').on('click', function () {
         window.location.href = 'myuser.html';
     });
-    
-    function btnCartEvent(){
-        $('.cart-btn').on('click', function(e){
+
+    function btnCartEvent() {
+        $('.cart-btn').on('click', function (e) {
             e.preventDefault();
             let quantity = $(this).parent().prev().children('input').val();
             let idProduct = $(this).data('id');
-            if(quantity > 0){
+            if (quantity > 0) {
                 $.ajax({
-                   type: 'POST',
-                   url: 'SaleController',
-                   data: {action: 'addSale', quantity: quantity, idProduct: idProduct}
+                    type: 'POST',
+                    url: 'SaleController',
+                    data: {action: 'addSale', quantity: quantity, idProduct: idProduct}
                 });
             }
-         });
+        });
     }
-    
-    function generateProductGrid(res){
-        let productList = JSON.parse(res);
-            let newHtml = "";
 
-            productList.forEach((product) =>{
-                newHtml += `
+    function generateProductGrid(res) {
+        let productList = JSON.parse(res);
+        let newHtml = "";
+        productList.forEach((product) => {
+            newHtml += `
                 <div class="col s12 m6 l4">
                     <div class="card sticky-action">
                         <div class="card-image">
@@ -73,34 +72,35 @@ $(document).ready(() => {
                         </div>
                         <div class="card-reveal">
                             <span class="card-title">${product.name}<i class="material-icons right">close</i></span>
-                            <p class="flow-text">${product.description}</p>
+                            <span class="green-text text-darken-2">S/. ${product.price}</span>
+                            <p>${product.description}</p>
                         </div>
                     </div>
                 </div>
                 `;
-            });
-            $('#product-grid').html(newHtml);
+        });
+        $('#product-grid').html(newHtml);
     }
 
-    $('.category-search').on('click', function(){
+    $('.category-search').on('click', function () {
         let idCategory = $(this).data('id');
         $.ajax({
             type: 'GET',
             url: 'ProductController',
             data: {idCategory: idCategory, action: 'category'}
-        }).done(function(res){
+        }).done(function (res) {
             generateProductGrid(res);
             validateNumberInput();
         });
     });
     // END OF CARD
 
-    $('#most-wanted').on('click', function(){
+    $('#most-wanted').on('click', function () {
         $.ajax({
             type: 'GET',
             url: 'ProductController',
             data: {action: 'most-wanted'}
-        }).done(function(res) {
+        }).done(function (res) {
             generateProductGrid(res);
             btnCartEvent();
         });

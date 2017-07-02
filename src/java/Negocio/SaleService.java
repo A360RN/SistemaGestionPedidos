@@ -13,11 +13,11 @@ import Modelo.Sale;
  *
  * @author fernando
  */
-public class SaleBO {
+public class SaleService {
 
     private SaleDao saleDao;
     
-    public SaleBO() {
+    public SaleService() {
         saleDao = new SaleImpl();
     }
     

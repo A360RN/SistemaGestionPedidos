@@ -4,8 +4,8 @@ import Dao.*;
 import DaoImplementation.CustomerImpl;
 import DaoImplementation.SaleImpl;
 import Modelo.*;
-import Negocio.CustomerBO;
-import Negocio.ProductBO;
+import Negocio.CustomerService;
+import Negocio.ProductService;
 import java.util.*;
 
 /*
@@ -21,13 +21,13 @@ import java.util.*;
 public class test {
     public static void main(String[] args) {
         
-        ProductBO productService = new ProductBO();
+        ProductService productService = new ProductService();
         ArrayList<Product> lista = productService.filterByCategory(1);
         for(Product p : lista){
             System.out.println(p.getImage());
         }
         
-//        ProductBO productService = new ProductBO();
+//        ProductService productService = new ProductService();
 //        ArrayList<Product> lista = productService.filter();
 //        for(Product p : lista){
 //            System.out.println(p.getImage());
@@ -39,7 +39,7 @@ public class test {
 //          Customer c = new Customer();
 //          c.setUserName("OMARSEX");
 //          c.setPassword("ELI423");
-//          boolean finded = new CustomerBO().login(c);
+//          boolean finded = new CustomerService().login(c);
 //          System.out.println(finded);
 //        Category cat= new Category(4,"cat4","ggggg");
 //        CategoryImpl dx=new CategoryImpl();

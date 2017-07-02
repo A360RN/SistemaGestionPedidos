@@ -7,7 +7,7 @@
                 <button id="btn-actualizar" class="btn waves-effect green">Actualizar Datos</button>
             </div>
             <div class="col m4 s12">
-                <button class="btn waves-effect red">Cambiar contraseÃ±a</button>
+                <button class="btn waves-effect red">Cambiar contraseña</button>
             </div>
 
             <div class="clearfix"></div>

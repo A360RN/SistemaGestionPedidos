@@ -32,19 +32,24 @@
                 <ul class="right hide-on-med-and-down">
                     <%if (!userFlag) {%>
                     <li><a href="index.jsp">Login</a></li>
-                    <li><a href="register.jsp">Register</a></li>
+                    <li><a href="register.jsp">Registrarse</a></li>
                     <%}else{%>
-                    <li><a href="cart.jsp">Ver carrito<i class="material-icons right"> shopping_cart</i></a></li>
+                    <li><a href="products.jsp">Tienda<i class="material-icons right">store</i></a></li>
+                    <li><a href="SaleController?action=cart">Ver carrito<i class="material-icons right"> shopping_cart</i></a></li>
                     <li><a href="profile.jsp">Mi Perfil</a></li>
-                    <li><a href="UserController?action=logout">Logout</a></li>
+                    <li><a href="UserController?action=logout">Salir</a></li>
                     <%}%>
                 </ul>
                 <ul class="side-nav dark-primary-color" id="sidebar">
+                    <%if (!userFlag) {%>
                     <li><a href="index.jsp">Login</a></li>
                     <li><a href="register.jsp">Register</a></li>
-                    <li><a href="UserController?action=logout">Logout</a></li>
+                    <%}else{%>
+                    <li><a href="products.jsp">Tienda<i class="material-icons right">store</i></a></li>
                     <li><a href="cart.jsp">Ver carrito<i class="material-icons right">shopping_cart</i></a></li>
                     <li><a href="profile.jsp">Mi Perfil</a></li>
+                    <li><a href="UserController?action=logout">Salir</a></li>
+                    <%}%>
                 </ul>
             </div>
         </nav>

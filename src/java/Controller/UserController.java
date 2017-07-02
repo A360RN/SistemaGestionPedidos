@@ -8,9 +8,9 @@ package Controller;
 import Modelo.Category;
 import Modelo.Customer;
 import Modelo.Product;
-import Negocio.CategoryBO;
-import Negocio.CustomerBO;
-import Negocio.ProductBO;
+import Negocio.CategoryService;
+import Negocio.CustomerService;
+import Negocio.ProductService;
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
@@ -27,6 +27,16 @@ import javax.servlet.http.HttpSession;
 @WebServlet(name = "UserController", urlPatterns = {"/UserController"})
 public class UserController extends HttpServlet {
 
+    private CustomerService customerService;
+    private CategoryService categoryService;
+    private ProductService productService;
+
+    public UserController() {
+        customerService = new CustomerService();
+        categoryService = new CategoryService();
+        productService = new ProductService();
+    }
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -36,7 +46,6 @@ public class UserController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -50,7 +59,7 @@ public class UserController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String action = request.getParameter("action");
-        if(action.equals("logout")){
+        if (action.equals("logout")) {
             HttpSession session = request.getSession();
             session.invalidate();
             response.sendRedirect("index.jsp");
@@ -69,9 +78,9 @@ public class UserController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String action = request.getParameter("action");
-        if(action.equals("login")){
+        if (action.equals("login")) {
             login(request, response);
-        }  
+        }
 
     }
 
@@ -85,9 +94,8 @@ public class UserController extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    private void login(HttpServletRequest request, HttpServletResponse response) 
+    private void login(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        CustomerBO customerService = new CustomerBO();
         Customer c = new Customer();
         String username = request.getParameter("username");
         String password = request.getParameter("password");
@@ -95,9 +103,8 @@ public class UserController extends HttpServlet {
         c.setPassword(password);
         boolean isCorrect = customerService.login(c);
         if (isCorrect) {
-            HttpSession session = request.getSession();
-            ProductBO productService = new ProductBO();
-            CategoryBO categoryService = new CategoryBO();
+            HttpSession session = request.getSession(true);
+            session.setMaxInactiveInterval(8 * 60);
             ArrayList<Product> listProducts = productService.filter();
             ArrayList<Category> listCategory = categoryService.filter();
             c = customerService.find(c);

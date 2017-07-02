@@ -9,6 +9,6 @@ package Negocio;
  *
  * @author fernando
  */
-public class ProductCategoryBO {
+public class ProductCategoryService {
     
 }
