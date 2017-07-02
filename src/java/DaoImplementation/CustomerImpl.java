@@ -67,9 +67,18 @@ public class CustomerImpl implements CustomerDao {
             rs = stm.executeQuery(query);
             if (rs.next()) {
                 dto = new Customer();
+                dto.setIdCustomer(rs.getInt("idCustomer"));
                 dto.setUserName(rs.getString("userName"));
                 dto.setPassword(rs.getString("password"));
-                dto.setIdCustomer(rs.getInt("idCustomer"));
+                dto.setDni(rs.getString("dni"));
+                dto.setRuc(rs.getString("ruc"));
+                dto.setFirstName(rs.getString("firstName"));
+                dto.setMiddleName(rs.getString("middleName"));
+                dto.setLastName(rs.getString("lastName"));
+                dto.setLastName2(rs.getString("lastName2"));
+                dto.setAddress(rs.getString("address"));
+                dto.setEmail(rs.getString("email"));
+                dto.setPhoneNumber(rs.getString("phoneNumber"));
                 dto.setCustomerType(rs.getString("customerType"));
             }
             rs.close();
@@ -107,13 +116,12 @@ public class CustomerImpl implements CustomerDao {
     public void update(Customer dto) {
         try {
             cn = Conexion.ini();
-            query = "UPDATE Customer SET address=?,phoneNumber=?,password=?,email=? WHERE idCustomer=?";
+            query = "UPDATE Customer SET address=?,phoneNumber=?,email=? WHERE idCustomer=?";
             ps = cn.prepareStatement(query);
             ps.setString(1, dto.getAddress());
             ps.setString(2, dto.getPhoneNumber());
-            ps.setString(3, dto.getPassword());
-            ps.setString(4, dto.getEmail());
-            ps.setInt(5, dto.getIdCustomer());
+            ps.setString(3, dto.getEmail());
+            ps.setInt(4, dto.getIdCustomer());
             ps.executeUpdate();
             ps.close();
         } catch (SQLException e) {

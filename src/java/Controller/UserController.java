@@ -15,6 +15,7 @@ import Negocio.ProductService;
 import Negocio.SaleService;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -84,6 +85,10 @@ public class UserController extends HttpServlet {
         String action = request.getParameter("action");
         if (action.equals("login")) {
             login(request, response);
+        } else if (action.equals("update")) {
+            update(request, response);
+        } else if (action.equals("register")) {
+            register(request, response);
         }
 
     }
@@ -109,29 +114,88 @@ public class UserController extends HttpServlet {
         if (isCorrect) {
             HttpSession session = request.getSession(true);
             session.setMaxInactiveInterval(8 * 60);
-            ArrayList<Product> listProducts = productService.filter();
-            ArrayList<Category> listCategory = categoryService.filter();
+            initProducts(session);
             c = customerService.find(c);
+            c.setPassword(""); // seguridad e.e
             session.setAttribute("user", c);
             checkForCart(request, response);
-            session.setAttribute("listProducts", listProducts);
-            session.setAttribute("categories", listCategory);
             request.getRequestDispatcher("products.jsp").forward(request, response);
         } else {
-            request.setAttribute("message", "Error");
+            request.setAttribute("message", "Usuario o contraseña incorrectos");
             request.getRequestDispatcher("index.jsp").forward(request, response);
 
         }
     }
-    
-    private void checkForCart(HttpServletRequest request, HttpServletResponse response){
-        
+
+    public void initProducts(HttpSession session) {
+        ArrayList<Product> listProducts = productService.filter();
+        ArrayList<Category> listCategory = categoryService.filter();
+        session.setAttribute("listProducts", listProducts);
+        session.setAttribute("categories", listCategory);
+    }
+
+    private void checkForCart(HttpServletRequest request, HttpServletResponse response) {
+
         HttpSession session = request.getSession();
-        Customer user = (Customer)session.getAttribute("user");
+        Customer user = (Customer) session.getAttribute("user");
         Sale cart = saleService.findSaleByStatus(user.getIdCustomer(), "BUYING");
-        if(cart != null){
+        if (cart != null) {
             session.setAttribute("cart", cart);
         }
     }
 
+    private void update(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        Customer dto = (Customer) session.getAttribute("user");
+        dto.setPhoneNumber(request.getParameter("phone"));
+        dto.setAddress(request.getParameter("address").trim());
+        dto.setEmail(request.getParameter("email"));
+        customerService.update(dto);
+        dto = customerService.find(dto);
+        session.setAttribute("user", dto);
+        response.sendRedirect("profile.jsp");
+    }
+
+    private void register(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        Customer newUser = new Customer();
+
+        String username = request.getParameter("username");
+        newUser.setUserName(username);
+        if (!customerService.userExists(newUser)) {
+            String password = request.getParameter("password");
+            String firstName = request.getParameter("firstname").toUpperCase();
+            String middleName = request.getParameter("middlename").toUpperCase();
+            String lastname = request.getParameter("lastname").toUpperCase();
+            String lastname2 = request.getParameter("lastname2").toUpperCase();
+            String dni = request.getParameter("dni");
+            String ruc = request.getParameter("ruc");
+            String phone = request.getParameter("phone");
+            String address = request.getParameter("address");
+            String email = request.getParameter("email").toUpperCase();
+
+            newUser.setPassword(password);
+            newUser.setFirstName(firstName);
+            newUser.setMiddleName(middleName);
+            newUser.setLastName(lastname);
+            newUser.setLastName2(lastname2);
+            newUser.setRuc(ruc);
+            newUser.setDni(dni);
+            newUser.setPhoneNumber(phone);
+            newUser.setAddress(address);
+            newUser.setEmail(email);
+
+            customerService.insert(newUser);
+            newUser = customerService.find(newUser);
+            newUser.setPassword("");
+            HttpSession session = request.getSession(true);
+            session.setAttribute("user", newUser);
+            initProducts(session);
+            response.sendRedirect("products.jsp");
+        } else {
+            response.sendRedirect("register.jsp");
+        }
+
+    }
 }

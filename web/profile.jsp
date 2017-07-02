@@ -14,10 +14,10 @@
     <div class="row">
         <h1>Mi Perfil</h1>
         <div class="col m4 s12">
-            <button id="btn-actualizar" class="btn waves-effect green">Actualizar Datos</button>
+            <a href="myuser.jsp" class="btn waves-effect green">Actualizar Datos</a>
         </div>
         <div class="col m4 s12">
-            <button class="btn waves-effect red">Cambiar contraseña</button>
+            <a class="btn waves-effect red">Cambiar contraseña</a>
         </div>
 
         <div class="clearfix"></div>

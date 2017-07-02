@@ -16,7 +16,7 @@
 %>
 
 <jsp:include page="flash-message.jsp"></jsp:include>
-
+<% if (listaProductos != null) {%>
 <div class="row">
     <div class="col s12 m3">
         <div class="collection">
@@ -31,7 +31,7 @@
 
     <div id="product-grid" class="col s12 m9 right">
         <!-- empieza card -->
-        <% if (listaProductos != null) {%>
+
         <% for (Product p : listaProductos) {%>
         <div class="col s12 m6 l4">
             <div class="card sticky-action">
@@ -63,10 +63,10 @@
             </div>
         </div>
         <% } %>
-        <% }%>
+
         <!-- termina card -->
     </div>
 
 </div>
-
+<% }%>
 <jsp:include page="footer.jsp"></jsp:include>

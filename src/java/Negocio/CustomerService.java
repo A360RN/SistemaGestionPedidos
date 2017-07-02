@@ -22,7 +22,8 @@ public class CustomerService{
         customerDao= new CustomerImpl();
     }
     public void insert(Customer dto) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        dto.setCustomerType("NORMAL");
+        customerDao.insert(dto);
     }
 
     public Customer find(Object f) {
@@ -34,7 +35,7 @@ public class CustomerService{
     }
 
     public void update(Customer dto) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        customerDao.update(dto);
     }
 
     public void delete(Object d) {
@@ -55,6 +56,11 @@ public class CustomerService{
             return true;
         }
         return false;            
+    }
+    
+    public boolean userExists(Customer newUser){
+        Customer oldUser = find(newUser);
+        return oldUser != null;
     }
     
 }

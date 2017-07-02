@@ -31,24 +31,24 @@
                 <a href="#" data-activates="sidebar" class="button-collapse right"><i class="material-icons">menu</i></a>
                 <ul class="right hide-on-med-and-down">
                     <%if (!userFlag) {%>
-                    <li><a href="index.jsp">Login</a></li>
+                    <li><a href="index.jsp">Login <i class="material-icons right">account_circle</i></a></li>
                     <li><a href="register.jsp">Registrarse</a></li>
                     <%}else{%>
                     <li><a href="products.jsp">Tienda<i class="material-icons right">store</i></a></li>
                     <li><a href="SaleController?action=cart">Ver carrito<i class="material-icons right"> shopping_cart</i></a></li>
-                    <li><a href="SaleController?action=last-sales">Mi Perfil</a></li>
-                    <li><a href="UserController?action=logout">Salir</a></li>
+                    <li><a href="SaleController?action=last-sales">Mi Perfil <i class="material-icons right">face</i></a></li>
+                    <li><a href="UserController?action=logout">Salir <i class="material-icons right">exit_to_app</i></a></li>
                     <%}%>
                 </ul>
                 <ul class="side-nav dark-primary-color" id="sidebar">
                     <%if (!userFlag) {%>
-                    <li><a href="index.jsp">Login</a></li>
+                    <li><a href="index.jsp">Login <i class="material-icons right">account_circle</i></a></li>
                     <li><a href="register.jsp">Register</a></li>
                     <%}else{%>
                     <li><a href="products.jsp">Tienda<i class="material-icons right">store</i></a></li>
-                    <li><a href="cart.jsp">Ver carrito<i class="material-icons right">shopping_cart</i></a></li>
-                    <li><a href="profile.jsp">Mi Perfil</a></li>
-                    <li><a href="UserController?action=logout">Salir</a></li>
+                    <li><a href="SaleController?action=cart">Ver carrito<i class="material-icons right"> shopping_cart</i></a></li>
+                    <li><a href="SaleController?action=last-sales">Mi Perfil <i class="material-icons right">face</i></a></li>
+                    <li><a href="UserController?action=logout">Salir <i class="material-icons right">exit_to_app</i></a></li>
                     <%}%>
                 </ul>
             </div>

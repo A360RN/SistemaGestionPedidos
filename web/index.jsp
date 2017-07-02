@@ -25,7 +25,7 @@
         </div>
         <div class="row">
             <div class="col s6 offset-s3 center-align">
-                <button class="btn accent-color"><i class="material-icons left">face</i>Registrarse</button>
+                <a href="register.jsp" class="btn accent-color"><i class="material-icons left">face</i>Registrarse</a>
             </div>
         </div>
     </div>
