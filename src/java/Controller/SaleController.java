@@ -114,7 +114,7 @@ public class SaleController extends HttpServlet {
         sale.setTotalDiscount(0);
 
         saleService.addSale(sale);
-        
+        System.out.println("ESTOY AGREGANDO VENTA");
         sale = saleService.findSaleByStatus(idCustomer, "BUYING");
         session.setAttribute("cart", sale);
     }
