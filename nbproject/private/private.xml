@@ -5,9 +5,7 @@
         <group>
             <file>file:/C:/Users/alonsorn/Desktop/SistemaGestionPedidos/web/resources/js/main.js</file>
             <file>file:/C:/Users/alonsorn/Desktop/SistemaGestionPedidos/src/java/Controller/SaleController.java</file>
-            <file>file:/C:/Users/alonsorn/Desktop/SistemaGestionPedidos/web/footer.jsp</file>
-            <file>file:/C:/Users/alonsorn/Desktop/SistemaGestionPedidos/web/products.jsp</file>
-            <file>file:/C:/Users/alonsorn/Desktop/SistemaGestionPedidos/web/flash-message.jsp</file>
+            <file>file:/C:/Users/alonsorn/Desktop/SistemaGestionPedidos/src/java/Controller/UserController.java</file>
         </group>
     </open-files>
 </project-private>

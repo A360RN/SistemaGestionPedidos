@@ -13,9 +13,9 @@ import Negocio.CategoryService;
 import Negocio.CustomerService;
 import Negocio.ProductService;
 import Negocio.SaleService;
+import Util.SessionManager;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -64,8 +64,9 @@ public class UserController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String action = request.getParameter("action");
-        if (action.equals("logout")) {
-            HttpSession session = request.getSession();
+        HttpSession session = request.getSession();
+        if (SessionManager.isLoggedIn(session) && action.equals("logout")) {
+            System.out.println(action);
             session.invalidate();
             response.sendRedirect("index.jsp");
         }

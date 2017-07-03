@@ -39,7 +39,7 @@ $(document).ready(() => {
 
     // si val en cantidad <= 0
     function validateNumberInput() {
-        $('input[type="number"]').on('keyup mouseup', function () {
+        $(document).on('keyup mouseup', 'input[type="number"]', function () {
             let val = $(this).val();
             if (val <= 0) {
                 $(this).val(null);
@@ -54,9 +54,11 @@ $(document).ready(() => {
     });
 
     function addProduct() {
-        $('.cart-btn').on('click', function (e) {
+        $(document).on('click', '.cart-btn', function (e) {
+            console.log(this);
             e.preventDefault();
             let quantity = $(this).parent().prev().children('input').val();
+            console.log(quantity);
             let idProduct = $(this).data('id');
             if (quantity > 0) {
                 $.ajax({
@@ -92,7 +94,7 @@ $(document).ready(() => {
                                 <div class="row">
                                     <div class="input-field inline col s12 m7"><input type="number" placeholder="Cantidad"></div>
                                     <div class="input-field inline">
-                                        <button data-id="${product.idProduct}" class="card-btn btn accent-color"><i class="material-icons">shopping_cart</i></button>
+                                        <button data-id="${product.idProduct}" class="cart-btn btn accent-color"><i class="material-icons">shopping_cart</i></button>
                                     </div>
                                 </div>
                             </form>
@@ -106,7 +108,7 @@ $(document).ready(() => {
                 </div>
                 `;
         });
-        $('#product-grid').html(newHtml);
+        return newHtml;
     }
 
     $('.category-search').on('click', function () {
@@ -116,8 +118,8 @@ $(document).ready(() => {
             url: 'ProductController',
             data: {idCategory: idCategory, action: 'category'}
         }).done(function (res) {
-            generateProductGrid(res);
-            validateNumberInput();
+            let newHtml = generateProductGrid(res);
+            $('#product-grid').html(newHtml);
         });
     });
 
@@ -128,7 +130,6 @@ $(document).ready(() => {
             data: {action: 'most-wanted'}
         }).done(function (res) {
             generateProductGrid(res);
-            btnCartEvent();
         });
     });
 });

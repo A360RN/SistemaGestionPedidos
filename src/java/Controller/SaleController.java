@@ -10,6 +10,7 @@ import Modelo.Sale;
 import Modelo.SaleDetail;
 import Negocio.SaleService;
 import Negocio.SaleDetailService;
+import Util.SessionManager;
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
@@ -56,7 +57,7 @@ public class SaleController extends HttpServlet {
         String action = request.getParameter("action");
         if (action.equals("cart")) {
             showCart(request, response);
-        } else if(action.equals("last-sales")){
+        } else if (action.equals("last-sales")) {
             findLastSales(request, response);
             response.sendRedirect("profile.jsp");
         }
@@ -99,18 +100,21 @@ public class SaleController extends HttpServlet {
         int idProduct = Integer.parseInt(request.getParameter("idProduct"));
         Customer user = (Customer) session.getAttribute("user");
         boolean doesCartExists = cartExists(session);
-
-        if (!doesCartExists) {
-            createSale(session, user.getIdCustomer(), "BUYING");
+        if (SessionManager.isLoggedIn(session)) {
+            if (!doesCartExists) {
+                createSale(session, user.getIdCustomer(), "BUYING");
+            }
+            Sale sale = (Sale) session.getAttribute("cart");
+            int idSale = sale.getIdSale();
+            String customerType = user.getCustomerType();
+            SaleDetail saleDetail = new SaleDetail();
+            saleDetail.setIdProduct(idProduct);
+            saleDetail.setIdSale(idSale);
+            saleDetail.setQuantity(quantity);
+            System.out.println("entro a detalle controller");
+            saleDetailService.addSaleDetail(customerType, saleDetail);
         }
-        Sale sale = (Sale) session.getAttribute("cart");
-        int idSale = sale.getIdSale();
-        String customerType = user.getCustomerType();
-        SaleDetail saleDetail = new SaleDetail();
-        saleDetail.setIdProduct(idProduct);
-        saleDetail.setIdSale(idSale);
-        saleDetail.setQuantity(quantity);
-        saleDetailService.addSaleDetail(customerType, saleDetail);
+
     }
 
     private boolean cartExists(HttpSession session) {
@@ -165,7 +169,7 @@ public class SaleController extends HttpServlet {
     private void findLastSales(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-        Customer user = (Customer)session.getAttribute("user");
+        Customer user = (Customer) session.getAttribute("user");
         int idCustomer = user.getIdCustomer();
         ArrayList<Sale> lastSales = saleService.findLastSales(idCustomer);
         session.setAttribute("lastSales", lastSales);

@@ -101,7 +101,6 @@ public class ProductImpl implements ProductDao {
         try {
             dtoList = new ArrayList<>();
             cn = Conexion.ini();
-            System.out.println(f);
             query = "select p.idProduct,p.name,p.description,p.price,p.stock,p.image from"
                     + " Product p,ProductCategory pc where pc.idCategory='" + (int) f + "' AND p.idProduct=pc.idProduct";
             stm = cn.createStatement();
