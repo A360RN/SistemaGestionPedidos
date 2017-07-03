@@ -126,10 +126,12 @@ public class UserController extends HttpServlet {
             c.setPassword(""); // seguridad e.e
             session.setAttribute("user", c);
             checkForCart(request, response);
-            request.getRequestDispatcher("products.jsp").forward(request, response);
+//            request.getRequestDispatcher("products.jsp").forward(request, response);
+            response.sendRedirect("products.jsp");
         } else {
-            request.setAttribute("message", "Usuario o contraseña incorrectos");
-            request.getRequestDispatcher("index.jsp").forward(request, response);
+            HttpSession session = request.getSession();
+            session.setAttribute("message", "Usuario o contraseña incorrectos");
+            response.sendRedirect("index.jsp");
 
         }
     }

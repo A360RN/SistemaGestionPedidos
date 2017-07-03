@@ -1,11 +1,18 @@
+<%@page import="java.math.RoundingMode"%>
+<%@page import="java.math.BigDecimal"%>
+<%@page import="Modelo.Sale"%>
 <%@page import="Modelo.SaleDetail"%>
 <%@page import="java.util.ArrayList"%>
 <jsp:include page="header.jsp"></jsp:include>
 
 <%
     ArrayList<SaleDetail> cartDetails = null;
+    Sale cart = null;
     if (session.getAttribute("cartDetails") != null) {
         cartDetails = (ArrayList<SaleDetail>) session.getAttribute("cartDetails");
+    }
+    if (session.getAttribute("cart") != null) {
+        cart = (Sale) session.getAttribute("cart");
     }
 %>
 
@@ -39,6 +46,16 @@
 
         </tbody>
     </table>
+
+    <div class="col s6 offset-s4">
+        <p class="right-align">Subtotal: S/. <%= new BigDecimal(cart.getTotalDiscount() + cart.getTotal()).setScale(2, RoundingMode.HALF_UP).doubleValue()%></p> 
+    </div>
+    <div class="col s6 offset-s4">
+        <p class="right-align">Descuento total: S/. <%= new BigDecimal(cart.getTotalDiscount()).setScale(2, RoundingMode.HALF_UP).doubleValue()%></p> 
+    </div>
+    <div class="col s6 offset-s4">
+        <p class="right-align">Total: S/. <%= new BigDecimal(cart.getTotal()).setScale(2, RoundingMode.HALF_UP).doubleValue()%></p>
+    </div>
 
     <div class="col s12 m6 right">
 

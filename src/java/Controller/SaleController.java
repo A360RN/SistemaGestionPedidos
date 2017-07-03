@@ -122,8 +122,9 @@ public class SaleController extends HttpServlet {
             saleDetail.setIdSale(idSale);
             saleDetail.setQuantity(quantity);
             saleDetailService.addSaleDetail(customerType, saleDetail);
+            Sale newCart = saleService.findSaleByStatus(user.getIdCustomer(), "BUYING");
+            session.setAttribute("cart", newCart);
         }
-
     }
 
     private boolean cartExists(HttpSession session) {
@@ -150,22 +151,23 @@ public class SaleController extends HttpServlet {
             int idSale = shoppingCart.getIdSale();
 
             ArrayList<SaleDetail> cartDetails = saleDetailService.getCartDetails(idSale);
-            if(!cartDetails.isEmpty()){
+            if (!cartDetails.isEmpty()) {
                 session.setAttribute("cartDetails", cartDetails);
             }
-            
+
         }
         response.sendRedirect("cart.jsp");
     }
 
-    private void findCart(HttpServletRequest request, HttpServletResponse response) {
+    private void updateCart(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
         Customer user = (Customer) session.getAttribute("user");
         int idCustomer = user.getIdCustomer();
         Sale cart = saleService.findSaleByStatus(idCustomer, "BUYING");
         ArrayList<SaleDetail> cartDetails = saleDetailService.getCartDetails(cart.getIdSale());
+        session.setAttribute("cart", cart);
         session.setAttribute("cartDetails", cartDetails);
-        if(cartDetails.isEmpty()){
+        if (cartDetails.isEmpty()) {
             session.removeAttribute("cartDetails");
         }
     }
@@ -205,6 +207,6 @@ public class SaleController extends HttpServlet {
         int idSale = cart.getIdSale();
         int idProduct = Integer.parseInt(request.getParameter("idProduct"));
         saleDetailService.deleteSaleDetail(idProduct, idSale);
-        findCart(request, response);
+        updateCart(request, response);
     }
 }

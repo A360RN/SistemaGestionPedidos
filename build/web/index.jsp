@@ -4,6 +4,7 @@
         <div class="row">
             <h2 class="center-align">Ingresa o Regístrate</h2>
 
+        <jsp:include page="flash-message.jsp" ></jsp:include>
             <form action="UserController?action=login" method="POST" class="col s6 offset-s3 user-form">
                 <div class="row">
                     <div class="input-field col s12">

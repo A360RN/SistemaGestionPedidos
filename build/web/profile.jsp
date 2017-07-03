@@ -1,3 +1,5 @@
+<%@page import="java.util.Date"%>
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="Modelo.SaleDetail"%>
 <%@page import="Modelo.Sale"%>
 <%@page import="java.util.ArrayList"%>
@@ -28,10 +30,16 @@
         <%if (lastSales != null) {%>
         <div class="col s12">
             <ul class="collapsible" data-collapsible="accordion">
-                <%for (Sale s : lastSales) {%>
+                <%
+                    for (Sale s : lastSales) {
+                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                        Date date = sdf.parse(s.getDateSale());
+                        SimpleDateFormat newDateFormat = new SimpleDateFormat("dd/MM/yyy hh:mm:ss a");
+                        String dateString = newDateFormat.format(date);
+                %>
                 <li>
                     <div class="collapsible-header">
-                        <span><%= s.getDateSale()%></span>
+                        <span><%= dateString %></span>
                         <span class="badge">Total: S/. <%= s.getTotal()%></span>
                     </div>
                     <div class="collapsible-body">
@@ -49,12 +57,12 @@
                             <tbody>
                                 <%for (SaleDetail detail : s.getSaleDetails()) {%>
                                 <tr>
-                                    <td><%= detail.getProduct().getName() %></td>
-                                    <td><%= detail.getQuantity() %></td>
-                                    <td><%= detail.getProduct().getPrice() %></td>
-                                    <td><%= detail.getSubtotal() + detail.getDiscount() %></td>
-                                    <td><%= detail.getDiscount()%></td>
-                                    <td><%= detail.getSubtotal()%></td>
+                                    <td><%= detail.getProduct().getName()%></td>
+                                    <td><%= detail.getQuantity()%></td>
+                                    <td>S/. <%= detail.getProduct().getPrice()%></td>
+                                    <td>S/. <%= detail.getSubtotal() + detail.getDiscount()%></td>
+                                    <td>S/. <%= detail.getDiscount()%></td>
+                                    <td>S/. <%= detail.getSubtotal()%></td>
                                 </tr>
                                 <% }%>
                             </tbody>

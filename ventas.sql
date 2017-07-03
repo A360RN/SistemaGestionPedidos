@@ -47,8 +47,8 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `Ventas`.`Sale` (
   `idSale` INT NOT NULL AUTO_INCREMENT,
   `saleDate` TIMESTAMP NOT NULL,
-  `total` DECIMAL(10,0) NOT NULL DEFAULT 0,
-  `totalDiscount` DECIMAL(10,0) NOT NULL DEFAULT 0,
+  `total` DECIMAL(10,2) NOT NULL DEFAULT 0,
+  `totalDiscount` DECIMAL(10,2) NOT NULL DEFAULT 0,
   `state` VARCHAR(20) NOT NULL check (state in ('PAID','CONFIRMED', 'BUYING')),
   `idCustomer` INT NOT NULL,
   PRIMARY KEY (`idSale`),
@@ -94,8 +94,8 @@ CREATE TABLE IF NOT EXISTS `Ventas`.`SaleDetail` (
   `idProduct` INT NOT NULL,
   `idSale` INT NOT NULL,
   `quantity` INT NOT NULL,
-  `discount` DECIMAL(10,0) NOT NULL DEFAULT 0,
-  `subtotal` DECIMAL(10,0) NOT NULL DEFAULT 0,
+  `discount` DECIMAL(10,2) NOT NULL DEFAULT 0,
+  `subtotal` DECIMAL(10,2) NOT NULL DEFAULT 0,
   PRIMARY KEY (`idProduct`, `idSale`),
   INDEX `fk_SaleDetail_Sale1_idx` (`idSale` ASC),
   CONSTRAINT `fk_SaleDetail_Product1`
