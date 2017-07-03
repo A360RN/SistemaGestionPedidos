@@ -24,7 +24,7 @@
             </tr>
         </thead>
         <tbody>
-            
+
             <%for (SaleDetail detail : cartDetails) {%>
             <tr>
                 <td><%= detail.getProduct().getName()%></td>
@@ -33,13 +33,13 @@
                 <td>S/. <%= detail.getProduct().getPrice() * detail.getQuantity()%></td>
                 <td>S/. <%= detail.getDiscount()%></td>
                 <td>S/. <%= detail.getProduct().getPrice() * detail.getQuantity() - detail.getDiscount()%></td>
-                <td><button class="btn red waves-effect"><i class="material-icons prefix">delete</i></button></td>
+                <td><button data-id="<%=detail.getIdProduct()%>" class="delete-detail-btn btn red waves-effect"><i class="material-icons prefix">delete</i></button></td>
             </tr>
             <%}%>
-            
+
         </tbody>
     </table>
-    
+
     <div class="col s12 m6 right">
 
     </div>
@@ -49,7 +49,7 @@
     <div class="col s12 center-align">
         <button id="delete-cart-btn" class="btn red darken-2 waves-effect">Eliminar Pedido</button>
     </div>        
-    <%}else{%>
+    <%} else {%>
     <h1 class="center-align">CARRITO VACIO...</h1>
     <%}%>
 </div>

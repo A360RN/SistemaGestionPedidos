@@ -132,4 +132,17 @@ $(document).ready(() => {
             generateProductGrid(res);
         });
     });
+
+    $('.delete-detail-btn').on('click', function () {
+        let idProduct = $(this).data('id');
+        console.log(idProduct);
+        $.ajax({
+            type: 'POST',
+            url: 'SaleController',
+            data: {action: 'delete-detail', idProduct: idProduct},
+            success: function () {
+                window.location.href = "cart.jsp";
+            }
+        });
+    });
 });

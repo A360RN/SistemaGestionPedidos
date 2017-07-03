@@ -84,12 +84,18 @@ public class UserController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String action = request.getParameter("action");
-        if (action.equals("login")) {
-            login(request, response);
-        } else if (action.equals("update")) {
-            update(request, response);
-        } else if (action.equals("register")) {
-            register(request, response);
+        switch (action) {
+            case "login":
+                login(request, response);
+                break;
+            case "update":
+                update(request, response);
+                break;
+            case "register":
+                register(request, response);
+                break;
+            default:
+                break;
         }
 
     }

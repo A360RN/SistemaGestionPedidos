@@ -75,12 +75,22 @@ public class SaleController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String action = request.getParameter("action");
-        if (action.equals("addSale")) {
-            addSale(request, response);
-        } else if (action.equals("save-cart")) {
-            confirmCart(request, response);
-        } else if (action.equals("delete-cart")) {
-            deleteCart(request, response);
+        System.out.println(action);
+        switch (action) {
+            case "addSale":
+                addSale(request, response);
+                break;
+            case "save-cart":
+                confirmCart(request, response);
+                break;
+            case "delete-cart":
+                deleteCart(request, response);
+                break;
+            case "delete-detail":
+                deleteDetail(request, response);
+                break;
+            default:
+                break;
         }
     }
 
@@ -111,7 +121,6 @@ public class SaleController extends HttpServlet {
             saleDetail.setIdProduct(idProduct);
             saleDetail.setIdSale(idSale);
             saleDetail.setQuantity(quantity);
-            System.out.println("entro a detalle controller");
             saleDetailService.addSaleDetail(customerType, saleDetail);
         }
 
@@ -141,10 +150,24 @@ public class SaleController extends HttpServlet {
             int idSale = shoppingCart.getIdSale();
 
             ArrayList<SaleDetail> cartDetails = saleDetailService.getCartDetails(idSale);
-            session.setAttribute("cartDetails", cartDetails);
+            if(!cartDetails.isEmpty()){
+                session.setAttribute("cartDetails", cartDetails);
+            }
+            
         }
         response.sendRedirect("cart.jsp");
+    }
 
+    private void findCart(HttpServletRequest request, HttpServletResponse response) {
+        HttpSession session = request.getSession();
+        Customer user = (Customer) session.getAttribute("user");
+        int idCustomer = user.getIdCustomer();
+        Sale cart = saleService.findSaleByStatus(idCustomer, "BUYING");
+        ArrayList<SaleDetail> cartDetails = saleDetailService.getCartDetails(cart.getIdSale());
+        session.setAttribute("cartDetails", cartDetails);
+        if(cartDetails.isEmpty()){
+            session.removeAttribute("cartDetails");
+        }
     }
 
     private void confirmCart(HttpServletRequest request, HttpServletResponse response)
@@ -173,5 +196,15 @@ public class SaleController extends HttpServlet {
         int idCustomer = user.getIdCustomer();
         ArrayList<Sale> lastSales = saleService.findLastSales(idCustomer);
         session.setAttribute("lastSales", lastSales);
+    }
+
+    private void deleteDetail(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        Sale cart = (Sale) session.getAttribute("cart");
+        int idSale = cart.getIdSale();
+        int idProduct = Integer.parseInt(request.getParameter("idProduct"));
+        saleDetailService.deleteSaleDetail(idProduct, idSale);
+        findCart(request, response);
     }
 }

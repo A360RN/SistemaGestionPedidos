@@ -76,4 +76,8 @@ public class SaleDetailService {
         
         return cartDetails;
     }
+    
+    public void deleteSaleDetail(int idProduct, int idSale){
+        saleDetailDao.delete(idProduct, idSale);
+    }
 }
