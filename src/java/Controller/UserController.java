@@ -160,8 +160,7 @@ public class UserController extends HttpServlet {
         dto.setPhoneNumber(request.getParameter("phone"));
         dto.setAddress(request.getParameter("address").trim());
         dto.setEmail(request.getParameter("email"));
-        customerService.update(dto);
-        dto = customerService.find(dto);
+        dto=customerService.findAndUpdate(dto);
         session.setAttribute("user", dto);
         response.sendRedirect("profile.jsp");
     }

@@ -18,7 +18,7 @@ import java.util.ArrayList;
  *
  * @author fernando
  */
-public class SaleDetailService {
+public class SaleDetailService extends SaleDetailServiceAbstract {
 
     private SaleDetailDao saleDetailDao;
     private ProductDao productDao;
@@ -28,7 +28,8 @@ public class SaleDetailService {
         productDao = new ProductImpl();
     }
 
-    public void modifySaleDetail(String customerType, SaleDetail newSaleDetail){
+    @Override
+    public SaleDetail modifySaleDetail(String customerType, SaleDetail newSaleDetail){
         int productId = newSaleDetail.getIdProduct();
         Product product = productDao.find(productId);
         double price = product.getPrice();
@@ -45,9 +46,11 @@ public class SaleDetailService {
         
         newSaleDetail.setDiscount(discount);
         newSaleDetail.setSubtotal(subtotal - discount);
+        return newSaleDetail;
         
     }
     
+    @Override
     public boolean addSaleDetail(String customerType, SaleDetail newSaleDetail) {
         modifySaleDetail(customerType, newSaleDetail);
         
@@ -67,6 +70,7 @@ public class SaleDetailService {
         return true;
     }
     
+    @Override
     public ArrayList<SaleDetail> getCartDetails(int idSale){
         ArrayList<SaleDetail> cartDetails = saleDetailDao.findBySale(idSale);
         for(SaleDetail d: cartDetails){
@@ -77,7 +81,9 @@ public class SaleDetailService {
         return cartDetails;
     }
     
+    @Override
     public void deleteSaleDetail(int idProduct, int idSale){
         saleDetailDao.delete(idProduct, idSale);
     }
+    
 }

@@ -121,7 +121,7 @@ public class SaleController extends HttpServlet {
             saleDetail.setIdProduct(idProduct);
             saleDetail.setIdSale(idSale);
             saleDetail.setQuantity(quantity);
-            saleDetailService.addSaleDetail(customerType, saleDetail);
+            saleDetailService.addToCart(customerType, saleDetail);
             Sale newCart = saleService.findSaleByStatus(user.getIdCustomer(), "BUYING");
             session.setAttribute("cart", newCart);
         }

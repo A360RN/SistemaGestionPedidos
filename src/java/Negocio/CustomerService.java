@@ -14,7 +14,7 @@ import java.util.ArrayList;
  *
  * @author fernando
  */
-public class CustomerService{
+public class CustomerService extends CustomerServiceAbstract{
 
     private CustomerDao customerDao;
     public CustomerService()
