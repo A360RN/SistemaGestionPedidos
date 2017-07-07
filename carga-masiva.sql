@@ -3,7 +3,7 @@ use ventas;
 LOAD DATA
 LOCAL INFILE 'C:/Users/alonsorn/Desktop/SistemaGestionPedidos/dataCustomer.csv'
 INTO TABLE Customer
-FIELDS TERMINATED BY ';'
+FIELDS TERMINATED BY ','
 LINES TERMINATED BY '\r\n'
 IGNORE 1 LINES;
 
