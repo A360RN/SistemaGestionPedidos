@@ -26,7 +26,7 @@ public class Conexion {
         {
             try {
             DriverManager.registerDriver(new Driver());
-            connection= DriverManager.getConnection("jdbc:mysql://localhost:3306/ventas","root","root");
+            connection= DriverManager.getConnection("jdbc:mysql://localhost:3306/Ventas","root","Mysql@Z");
             
         } catch (SQLException e) {
             System.out.println(

@@ -129,7 +129,7 @@ public class SaleImpl implements SaleDao{
         Sale dto = null;
         try {
             cn = Conexion.ini();
-            query = "SELECT * FROM SALE WHERE idCustomer = ? AND state = ?";
+            query = "SELECT * FROM Sale WHERE idCustomer = ? AND state = ?";
             ps = cn.prepareStatement(query);
             ps.setInt(1, idCustomer);
             ps.setString(2, state);
